@@ -1,0 +1,45 @@
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" *ngFor="let value of currentPath; index as i; last as isLast">
+        <a href="#" (click)="goToPreviousDirectory(i)" *ngIf="!isLast">{{value.directoryName}}</a>
+        <span *ngIf="isLast">{{value.directoryName}}</span>
+      </li>
+    </ol>
+  </nav>
+  <ul *ngIf="currentPath?.length > 1">
+    <li class="return">
+      <a href="#" (click)="goToPreviousDirectory(currentPath?.length - 2)">Zurück</a>
+    </li>
+  </ul>
+  <ul>
+    <li *ngFor="let value of directoryPaths[0].childDirectories" class="folder">
+      <a href="#" (click)="getDirectoryAndFilePaths(value)">{{value.directoryName}}</a>
+    </li>
+  </ul>
+  <ul>
+    <li *ngFor="let value of directoryPaths[0].files" class="file">
+      <a href="#" (click)="showImage(value)">{{value.fileName}}</a>
+    </li>
+  </ul>
+</div>
+
+
+<div *ngIf="img" class="container">
+  <div class="row">
+    <div class="col-6">
+      <img [src]="img" />
+    </div>
+    <div class="col-6">
+      <div class="row" *ngFor="let value of exifData">
+        <div class="form-group">
+          <label for="{{value.exifName}}">{{value.exifName}}</label>
+          <input type="text" readonly class="form-control" id="{{value.exifName}}" value="{{value.exifDescription}}">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

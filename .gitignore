@@ -102,3 +102,24 @@ dist
 
 # TernJS port file
 .tern-port
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+
+# Editor directories and files
+*.suo
+source/.vs/*
+*.v2
+source/.vs/WTBeiboot_SS21_Albus/v16/.suo
+source/WTBeiboot_SS21_Albus/obj/Release/net5.0-windows/AmongUsModUpdater.csprojAssemblyReference.cache
+/source/WTBeiboot_SS21_Albus/bin/
+/source/WTBeiboot_SS21_Albus.Logger/bin/
+/source/WTBeiboot_SS21_Albus.Service/bin/
+/source/WTBeiboot_SS21_Albus.Service.Contracts/bin/
+/source/WTBeiboot_SS21_Albus/obj/
+/source/WTBeiboot_SS21_Albus.Logger/obj/
+/source/WTBeiboot_SS21_Albus.Service/obj/
+/source/WTBeiboot_SS21_Albus.Service.Contracts/obj/
