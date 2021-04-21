@@ -14,6 +14,9 @@ namespace WTBeiboot_SS21_Albus.Service
             builder
                 .RegisterType<FileService>()
                 .As<IFileService>();
+            builder
+                .RegisterType<StartupService>()
+                .As<IStartupService>();
         }
     }
 }

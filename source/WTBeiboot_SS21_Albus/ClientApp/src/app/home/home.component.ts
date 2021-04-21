@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO } from "../../api/index";
+import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO, StartupService, ConfigurationDTO } from "../../api/index";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers: [DirectoryService, FileService]
+  providers: [StartupService, DirectoryService, FileService]
 })
 
 export class HomeComponent {
@@ -15,12 +15,21 @@ export class HomeComponent {
     directoryPath: null,
     files: null
   }];
+  public configurationDTO: ConfigurationDTO[] = [{
+    title: null,
+    values: []
+  }];
   public currentPath: DirectoryDTO[] = []
   public img = null;
   public exifData: ExifDTO[] = [];
 
-  constructor(private directoryService: DirectoryService, private fileService: FileService) {
-    this.getDirectoryAndFilePaths();
+  constructor(private startupService: StartupService, private directoryService: DirectoryService, private fileService: FileService) {
+    this.startupService.apiStartupGet()
+      .subscribe(result => {
+        this.configurationDTO = result;
+        console.log(this.configurationDTO);
+        this.getDirectoryAndFilePaths();
+      });
   }
 
   public getDirectoryAndFilePaths(_directoryDTO?: DirectoryDTO) {
@@ -45,14 +54,20 @@ export class HomeComponent {
     this.fileService.apiFilesPathGet(value.filePath)
       .subscribe(result => {
         result.forEach(obj => {
-          if (obj.name == "Exif IFD0") {
-            obj.tags.forEach(tag => {
-              this.exifData.push({
-                exifName: tag.name,
-                exifDescription: tag.description
-              });
-            })
-          }
+          this.configurationDTO.forEach(config => {
+            if (obj.name == config.title) {
+              obj.tags.forEach(tag => {
+                config.values.forEach(configValue => {
+                  if (tag.name == configValue) {
+                    this.exifData.push({
+                      exifName: tag.name,
+                      exifDescription: tag.description
+                    });
+                  }
+                })
+              })
+            }
+          })
         })
       })
   }

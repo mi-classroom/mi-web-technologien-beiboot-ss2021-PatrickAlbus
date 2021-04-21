@@ -9,11 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { FileDTO } from './fileDTO';
 
-export interface DirectoryDTO { 
-    directoryName?: string;
-    directoryPath?: string;
-    childDirectories?: Array<DirectoryDTO>;
-    files?: Array<FileDTO>;
+export interface ConfigurationDTO { 
+    title?: string;
+    values?: Array<string>;
 }
