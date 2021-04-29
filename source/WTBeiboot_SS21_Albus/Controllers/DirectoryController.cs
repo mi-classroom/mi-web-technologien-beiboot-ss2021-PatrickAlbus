@@ -29,12 +29,8 @@ namespace WTBeiboot_SS21_Albus.Controllers
         [HttpGet("")]
         public async Task<IActionResult> GetRootDirectory(string path = null)
         {
-            string previousPath = null;
-            if (path != null)
-            {
-                previousPath = _hostEnvironment.ContentRootPath + path.Replace("\\" + path.Split("\\").Last(), "");
-                path = _hostEnvironment.ContentRootPath + path;
-            }
+            string previousPath = (path != null) ? path.Replace("\\" + path.Split("\\").Last(), "") : null;
+            
             var response = _service.GetDirectory(path, previousPath) ;
 
             if (response == null)

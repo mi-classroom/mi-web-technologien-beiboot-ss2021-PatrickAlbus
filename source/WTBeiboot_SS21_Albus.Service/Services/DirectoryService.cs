@@ -9,6 +9,7 @@ using System.Web;
 using Microsoft.Extensions.Hosting;
 using WTBeiboot_SS21_Albus.Service.Contracts.DTO;
 using Microsoft.Extensions.Configuration;
+using WTBeiboot_SS21_Albus.Logger;
 
 namespace WTBeiboot_SS21_Albus.Service.Services
 {
@@ -17,22 +18,28 @@ namespace WTBeiboot_SS21_Albus.Service.Services
         private readonly IConfiguration _configuration;
         private readonly IHostEnvironment _hostEnvironment;
         private readonly IFileService _fileService;
-        
-        public DirectoryService(IConfiguration configuration, IHostEnvironment hostEnvironment, IFileService fileService)
+        private readonly ILoggerManager _loggerManager;
+
+        public DirectoryService(IConfiguration configuration, IHostEnvironment hostEnvironment, IFileService fileService, ILoggerManager loggerManager)
         {
             _configuration = configuration;
             _hostEnvironment = hostEnvironment;
             _fileService = fileService;
+            _loggerManager = loggerManager;
         }
 
         public async Task<IEnumerable<DirectoryDTO>> GetDirectory(string path = null, string previousPath = null)
         {
+#if DEBUG
+            if(path == null) path = "D:\\Uni\\Master\\Semester 2\\WebTechnologien\\BeibootProjekt\\mi-web-technologien-beiboot-ss2021-PatrickAlbus\\data";
+#endif
+
             List<DirectoryDTO> response = new List<DirectoryDTO>();
 
+            string currentPath = (path == null) ? _configuration.GetValue<String>("Settings:TargetDirectory") : path;
 
-            string currentPath = (path == null) ? _hostEnvironment.ContentRootPath + _configuration.GetValue<String>("Settings:TargetDirectory") : path;
-            if (path == null) previousPath = _hostEnvironment.ContentRootPath;
-            
+            _loggerManager.LogInfo(currentPath);
+
             if (!string.IsNullOrWhiteSpace(currentPath))
             {
                 if (!Directory.Exists(currentPath)) return null;
@@ -41,8 +48,8 @@ namespace WTBeiboot_SS21_Albus.Service.Services
 
                 DirectoryDTO _directoryDTO = new DirectoryDTO
                     {
-                        DirectoryName = dir.FullName.Replace(previousPath + "\\", ""),
-                        DirectoryPath = dir.FullName.Replace(_hostEnvironment.ContentRootPath, ""),
+                        DirectoryName = dir.FullName.Split(@"\").Last().Split(@"/").Last(),
+                        DirectoryPath = dir.FullName,
                         ChildDirectories = null,
                         Files = _fileService.GetFiles(dir.FullName).Result
                 };

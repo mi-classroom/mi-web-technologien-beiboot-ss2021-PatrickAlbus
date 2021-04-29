@@ -7,6 +7,9 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
+import { environment } from '../environments/environment'
+import { BASE_PATH } from '../api/variables';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +24,7 @@ import { HomeComponent } from './home/home.component';
       { path: '', component: HomeComponent, pathMatch: 'full' }
     ])
   ],
-  providers: [],
+  providers: [{ provide: BASE_PATH, useValue: environment.API_BASE_PATH }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

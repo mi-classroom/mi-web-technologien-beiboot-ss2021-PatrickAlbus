@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WTBeiboot_SS21_Albus.Logger\WTBeiboot_SS21_Albus.Logger.csproj" />
     <ProjectReference Include="..\WTBeiboot_SS21_Albus.Service.Contracts\WTBeiboot_SS21_Albus.Service.Contracts.csproj" />
   </ItemGroup>
 

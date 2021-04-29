@@ -50,7 +50,6 @@ namespace WTBeiboot_SS21_Albus
                     swaggerOptions.SwaggerDoc("WTBeiboot_APISpecification",
                         new OpenApiInfo
                         {
-
                             Title = projectInfo.GetSection("Title").Value,
                             Version = "V1",
                             Description = projectInfo.GetSection("Description").Value,

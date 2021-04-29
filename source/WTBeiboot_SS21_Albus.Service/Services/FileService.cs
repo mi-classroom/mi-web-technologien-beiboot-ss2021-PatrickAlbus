@@ -40,8 +40,8 @@ namespace WTBeiboot_SS21_Albus.Service.Services
                         response.Add(
                             new FileDTO
                             {
-                                FileName = f.FullName.Replace(path+"\\", ""),
-                                FilePath = f.FullName.Replace(_hostEnvironment.ContentRootPath + "\\wwwroot", "")
+                                FileName = f.FullName.Split(@"\").Last().Split(@"/").Last(),
+                                FilePath = f.FullName
                             }
                         );
                     }
@@ -53,8 +53,7 @@ namespace WTBeiboot_SS21_Albus.Service.Services
 
         public async Task<dynamic> GetExifOfFile(string path)
         {
-            string fullPath = _hostEnvironment.ContentRootPath + _configuration.GetValue<String>("Settings:TargetDirectory") + path;
-            if(File.Exists(fullPath)) return ImageMetadataReader.ReadMetadata(fullPath);
+            if(File.Exists(path)) return ImageMetadataReader.ReadMetadata(path);
 
             return null;
         }

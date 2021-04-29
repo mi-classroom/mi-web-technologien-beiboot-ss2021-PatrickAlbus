@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO, StartupService, ConfigurationDTO } from "../../api/index";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers: [StartupService, DirectoryService, FileService]
+  providers: [StartupService, DirectoryService, FileService ]
 })
 
 export class HomeComponent {
@@ -23,7 +24,7 @@ export class HomeComponent {
   public img = null;
   public exifData: ExifDTO[] = [];
 
-  constructor(private startupService: StartupService, private directoryService: DirectoryService, private fileService: FileService) {
+  constructor(private startupService: StartupService, private directoryService: DirectoryService, private fileService: FileService, private domSanitizer: DomSanitizer) {
     this.startupService.apiStartupGet()
       .subscribe(result => {
         this.configurationDTO = result;
@@ -49,9 +50,13 @@ export class HomeComponent {
   }
 
   public showImage(value: FileDTO) {
-    this.img = value.filePath;
-    this.exifData = [];
     this.fileService.apiFilesPathGet(value.filePath)
+      .subscribe(result => {
+        this.img = this.domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + result.fileContents);;
+      });
+    
+    this.exifData = [];
+    this.fileService.apiFilesExifPathGet(value.filePath)
       .subscribe(result => {
         result.forEach(obj => {
           this.configurationDTO.forEach(config => {
