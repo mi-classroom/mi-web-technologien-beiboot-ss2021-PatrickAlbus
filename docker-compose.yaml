@@ -1,24 +1,17 @@
 ﻿version: "3"
 services: 
-    nginx:
+    frontend:
+        build: ./frontend
+        ports: 
+            - 8080:80
+        expose:
+            - "80"
+    backend:
         build: 
-            context: ./WTBeiboot_SS21_Albus/Nginx
-            dockerfile: Dockerfile
+            context: ./backend
+            dockerfile: WTBeiboot_SS21_Albus/Dockerfile
         ports: 
-            - 80:80
-        restart: always
-    client:
-        build:
-            context: ./WTBeiboot_SS21_Albus/ClientApp
-            dockerfile: Dockerfile
-        ports: 
-            - 5000:80
-    dncapi:
-        build: 
-            context: ./
-            dockerfile: Dockerfile
-        ports: 
-            - 3000:80
+            - 49161:80
         volumes:
             - ./data:/mnt
         

@@ -8,5 +8,6 @@ RUN npm install
 COPY . .
 RUN ng build --prod
 
-FROM nginx as runtime
+FROM nginx:1.17.1-alpine
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/dist /usr/share/nginx/html
