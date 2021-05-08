@@ -28,7 +28,7 @@ neu gebaut werden. Die Option `-d` lässt bei Erfolg den Container im Hintergrun
 docker-compose ps
 ```
 
-überprüft bzw. der Aufruf im Browser über die URL [localhost:8080](http://localhost:8080/) (für das Frontend) und [localhost:49161](http://localhost:49161/) (für das Backend) überprüft werden.
+überprüft bzw. der Aufruf im Browser über die URL [localhost:80](http://localhost:80/) (für das Frontend) und [localhost:8080](http://localhost:8080/) (für das Backend) überprüft werden.
 
 Mit 
 
@@ -60,7 +60,7 @@ neu gebaut werden. Die Option `-d` lässt bei Erfolg den Container im Hintergrun
 docker-compose ps
 ```
 
-überprüft bzw. der Aufruf im Browser über die URL [localhost:8080](http://localhost:8080/) überprüft werden.
+überprüft bzw. der Aufruf im Browser über die URL [localhost:80](http://localhost:80/) überprüft werden.
 
 Mit 
 
@@ -84,7 +84,7 @@ neu gebaut werden. Die Option `-d` lässt bei Erfolg den Container im Hintergrun
 ```
 docker-compose ps
 ```
-überprüft bzw. der Aufruf im Browser über die URL [localhost:49161](http://localhost:49161/) überprüft werden.
+überprüft bzw. der Aufruf im Browser über die URL [localhost:8080](http://localhost:8080/) überprüft werden.
 
 Mit 
 ```
@@ -93,5 +93,5 @@ docker-compose down
 lässt sich der Dienst herunterfahren.
 
 ## APIs
-Die API-Dokumentation ist unter [http://localhost:49161/swagger](http://localhost:49161/swagger) zu finden.
+Die API-Dokumentation ist unter [http://localhost:8080/swagger](http://localhost:8080/swagger) zu finden.
 Dort können diese ebenfalls getestet werden und die URL der entsprechenden Abfrage werden ebenfalls angezeigt.

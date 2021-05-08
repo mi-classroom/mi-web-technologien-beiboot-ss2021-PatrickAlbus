@@ -3,7 +3,7 @@ services:
     frontend:
         build: ./frontend
         ports: 
-            - 8080:80
+            - 80:80
         expose:
             - "80"
     backend:
@@ -11,7 +11,7 @@ services:
             context: ./backend
             dockerfile: WTBeiboot_SS21_Albus/Dockerfile
         ports: 
-            - 49161:80
+            - 8080:80
         volumes:
             - ./data:/mnt
         
