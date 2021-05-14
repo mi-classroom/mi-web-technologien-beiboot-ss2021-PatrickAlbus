@@ -45,7 +45,7 @@ export class FileBrowsingComponent{
       if(directories[i].childDirectories != null) this.removefilteredData(directories[i].childDirectories);
       if(directories[i].files != null){
         for(var j = directories[i].files.length - 1; j>=0; j--){
-          if(directories[i].files[j].fileName.includes(this.filter) == false) {
+          if(directories[i].files[j].fileName.toLowerCase().includes(this.filter.toLowerCase()) == false) {
             directories[i].files.splice(j, 1)
           }
         }
