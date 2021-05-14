@@ -114,3 +114,6 @@ dist
 *.vs
 *bin
 *obj
+
+# Exclude data folder
+data/*
