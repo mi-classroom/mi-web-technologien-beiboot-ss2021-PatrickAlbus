@@ -129,3 +129,8 @@ lässt sich der Dienst herunterfahren.
 ## APIs
 Die API-Dokumentation ist unter [http://localhost:8080/swagger](http://localhost:8080/swagger) zu finden.
 Dort können diese ebenfalls getestet werden und die URL der entsprechenden Abfrage werden ebenfalls angezeigt.
+
+## Timetracker
+* Issue 1: 7 Stunden
+* Issue 2: 2 Stunden
+* Issue 3: 5 Stunden
