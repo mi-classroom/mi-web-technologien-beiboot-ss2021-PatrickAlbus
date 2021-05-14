@@ -1,0 +1,32 @@
+.container {
+    background-color: #e9ecef;
+    padding: 0;
+}
+
+.treeView{
+    padding-right: 15px;
+    padding-left: 15px;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;    
+}
+
+h6 {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    text-align: center;
+}
+h6:before, h6:after {
+    position: absolute;
+    top: 51%;
+    overflow: hidden;
+    width: 50%;
+    height: 0.5px;
+    content: '\a0';
+    background-color: #000;
+}
+h6:before {
+    margin-left: -50%;
+    text-align: right;
+}

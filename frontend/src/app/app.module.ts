@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { FileBrowsingComponent } from './file-browsing/file-browsing.component';
+import { TreeViewComponent } from './file-browsing/tree-view/tree-view.component';
 
 import { environment } from '../environments/environment'
 import { BASE_PATH } from '../api/variables';
@@ -14,7 +16,9 @@ import { BASE_PATH } from '../api/variables';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    FileBrowsingComponent,
+    TreeViewComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
