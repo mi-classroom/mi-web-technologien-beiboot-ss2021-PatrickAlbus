@@ -1,0 +1,12 @@
+ul {
+    margin-bottom: 0;
+    padding-left: 15px;
+}
+
+li.folder {
+    list-style-image: url(../../../assets/icons/folder.svg);
+}
+
+li.file {
+    list-style-image: url(../../../assets/icons/file-image.svg);
+}

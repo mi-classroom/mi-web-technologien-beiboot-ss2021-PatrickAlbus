@@ -1,6 +1,10 @@
 <ng-container *ngIf="value != null">
     <ng-container *ngFor="let item of value">
-        <a href="#" (click)="expandDirectory(item.directoryName)" [ngStyle]="{margin: level+'px'}"> {{item.directoryName}}</a> <br>
+        <ul [ngStyle]="{'margin-left': level+'px'}">
+            <li class="folder">
+                <a href="#" (click)="expandDirectory(item.directoryName)"> {{item.directoryName}}</a>
+            </li>
+        </ul>
         <app-tree-view className="n{{item.directoryName}}" [value]="item.childDirectories" [level]="level + 10" (imagePath)="getFilePathOnChange($event)" style="display: none;">
         </app-tree-view>
         <app-tree-view className="n{{item.directoryName}}" [files]="item.files" [level]="level + 10" (imagePath)="getFilePathOnChange($event)" style="display: none;">
@@ -8,7 +12,12 @@
     </ng-container>
 </ng-container>
 <ng-container *ngIf="files != null">
-    <ng-container *ngFor="let file of files">
+    <ul [ngStyle]="{'margin-left': level+'px'}"> 
+        <li *ngFor="let file of files" class="file">
+            <a href="#" (click)="chooseImage(file.filePath)"> {{file.fileName}}</a>
+        </li>
+    </ul>
+    <!-- <ng-container *ngFor="let file of files">
         <a href="#" (click)="chooseImage(file.filePath)" [ngStyle]="{margin: level+'px'}"> {{file.fileName}}</a><br>
-    </ng-container>
+    </ng-container> -->
 </ng-container>
