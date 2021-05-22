@@ -16,9 +16,9 @@ export class FileBrowsingComponent{
   @Output() 
   imagePath = new EventEmitter<string>();
 
-  private filteredDirectoryPaths: DirectoryDTO[] = [];
+  public filteredDirectoryPaths: DirectoryDTO[] = [];
   private directoryPaths: DirectoryDTO[];
-  private filter: string;
+  public filter: string;
 
   constructor(private directoryService: DirectoryService) {
     this.getDirectoryAndFilePaths();
@@ -32,7 +32,7 @@ export class FileBrowsingComponent{
       });
   }
 
-  private filterChange(){
+  public filterChange(){
     this.filteredDirectoryPaths = this.directoryPaths;
     
     if(this.filter != null && this.filter != ""){

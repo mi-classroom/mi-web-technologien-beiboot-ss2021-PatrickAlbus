@@ -14,7 +14,7 @@ export class HomeComponent implements OnChanges {
     title: null,
     values: []
   }];
-  private img = null;
+  public img = null;
   private exifData: ExifDTO[] = [];
 
   @Input()
