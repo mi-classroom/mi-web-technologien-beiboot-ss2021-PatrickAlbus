@@ -1,14 +1,17 @@
 .container {
     background-color: #e9ecef;
     padding: 0;
+    height: 100%;
+    min-height: 100vh;
+}
+
+.container .row{
+    padding: 0px 15px;
 }
 
 .treeView{
     padding-right: 15px;
     padding-left: 15px;
-    width: 100vw;
-    height: 100vh;
-    overflow: auto;    
 }
 
 h6 {

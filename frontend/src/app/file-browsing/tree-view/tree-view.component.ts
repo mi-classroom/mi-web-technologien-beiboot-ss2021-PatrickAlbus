@@ -18,6 +18,9 @@ export class TreeViewComponent {
   @Input()
   level = 0;
 
+  @Input()
+  parentClass = "";
+
   @Output() 
   imagePath = new EventEmitter<string>();
 
