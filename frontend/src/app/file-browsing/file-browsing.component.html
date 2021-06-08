@@ -14,6 +14,7 @@
     <div class="treeView">
         <app-tree-view *ngIf="filteredDirectoryPaths != null"
             (imagePath)="getFilePathOnChange($event)"
+            (imageDataJson)="getImageDataJsonOnChange($event)"
             [value]="filteredDirectoryPaths"
         ></app-tree-view>
     </div>

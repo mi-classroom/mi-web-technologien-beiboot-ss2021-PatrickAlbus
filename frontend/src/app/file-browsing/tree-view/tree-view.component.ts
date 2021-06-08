@@ -24,8 +24,10 @@ export class TreeViewComponent {
   @Output() 
   imagePath = new EventEmitter<string>();
 
+  @Output()
+  imageDataJson = new EventEmitter<string>();
+
   private expandDirectory(className: string){
-    console.log(className);
     var elements = document.querySelectorAll(".n"+className);
     elements.forEach(element => {
       if(element.hasAttribute("style")){
@@ -40,7 +42,15 @@ export class TreeViewComponent {
     this.imagePath.emit(filePath);
   }
 
+  public chooseImageDataJson(_imageDataJson: string){
+    this.imageDataJson.emit(_imageDataJson);
+  }
+
   public getFilePathOnChange($event){
     this.chooseImage($event);
+  }
+
+  public getImageDataJsonOnChange($event){
+    this.chooseImageDataJson($event);
   }
 }

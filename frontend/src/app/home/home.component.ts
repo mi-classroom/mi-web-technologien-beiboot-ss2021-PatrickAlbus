@@ -1,6 +1,8 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO, StartupService, ConfigurationDTO } from "../../api/index";
+
+
 
 @Component({
   selector: 'app-home',
@@ -16,9 +18,13 @@ export class HomeComponent implements OnChanges {
   }];
   public img = null;
   private exifData: ExifDTO[] = [];
+  public imgJson = null;
 
   @Input()
   filePath: string = null;
+
+  @Input()
+  imageDataJson: string = null;
 
   constructor(private startupService: StartupService, private fileService: FileService, private domSanitizer: DomSanitizer) {
     this.startupService.apiStartupGet()
@@ -27,10 +33,28 @@ export class HomeComponent implements OnChanges {
       });
   }
 
-  ngOnChanges(){
-    if(this.filePath != null){
-      this.showImage();
+  ngOnChanges(changes: SimpleChanges){
+    if(this.filePath && changes.filePath){
+      if(changes.filePath.currentValue != changes.filePath.previousValue){
+        if(this.filePath != null){
+          this.imgJson = null;
+          this.showImage();
+        }
+      }
     }
+
+    if(this.imageDataJson && changes.imageDataJson){
+      if(changes.imageDataJson.currentValue != changes.imageDataJson.previousValue){
+        if(this.imageDataJson != null){
+          this.img = null;
+          this.showJson();
+        }
+      }
+    }
+  }
+
+  private showJson() {
+    this.imgJson = JSON.parse(this.imageDataJson);
   }
 
   private showImage() {

@@ -50,6 +50,7 @@ namespace WTBeiboot_SS21_Albus.Service.Services
                     {
                         DirectoryName = dir.FullName.Split(@"\").Last().Split(@"/").Last(),
                         DirectoryPath = dir.FullName,
+                        ImageDataJson = _fileService.GetImageDataJson(dir.FullName).Result != null ? _fileService.GetImageDataJson(dir.FullName).Result : null, 
                         ChildDirectories = null,
                         Files = _fileService.GetFiles(dir.FullName).Result
                 };

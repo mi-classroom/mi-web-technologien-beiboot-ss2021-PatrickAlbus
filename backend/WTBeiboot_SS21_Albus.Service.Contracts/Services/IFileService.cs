@@ -10,6 +10,7 @@ namespace WTBeiboot_SS21_Albus.Service.Contracts.Services
     public interface IFileService
     {
         Task<IEnumerable<FileDTO>> GetFiles(string path);
+        Task<string> GetImageDataJson(string path);
         Task<dynamic> GetExifOfFile(string path);
     }
 }

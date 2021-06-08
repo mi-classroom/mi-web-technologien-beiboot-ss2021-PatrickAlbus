@@ -10,3 +10,15 @@ li.folder {
 li.file {
     list-style-image: url(../../../assets/icons/file-image.svg);
 }
+
+i.info::before{
+   content: url(../../../assets/icons/info-circle-solid.svg);
+   width: 15px;
+   height: 15px;
+   position: absolute;
+   margin-left: 10px;
+}
+
+a{
+    cursor: pointer;
+}

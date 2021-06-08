@@ -1,11 +1,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-2">
-      <app-file-browsing (imagePath)="getFilePathOnChange($event)"></app-file-browsing>
+      <app-file-browsing (imagePath)="getFilePathOnChange($event)" (imageDataJson)="getImageDataJsonOnChange($event)"></app-file-browsing>
     </div>
     <div class="col-10">
       <!-- <router-outlet></router-outlet> -->
-      <app-home [filePath]="filePath"></app-home>
+      <app-home [filePath]="filePath" [imageDataJson]="imageDataJson"></app-home>
     </div>
   </div>
 </div>

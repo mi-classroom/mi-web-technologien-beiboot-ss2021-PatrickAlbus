@@ -4,6 +4,7 @@ img{
 
 div.container{
     margin-bottom: 50px;
+    max-width: initial;
 }
 div.form-group{
     width: 100%;

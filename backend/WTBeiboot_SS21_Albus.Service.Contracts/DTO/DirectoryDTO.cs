@@ -10,6 +10,7 @@ namespace WTBeiboot_SS21_Albus.Service.Contracts.DTO
     {
         public string DirectoryName { get; set; }
         public string DirectoryPath { get; set; }
+        public string ImageDataJson { get; set; }
         public IEnumerable<DirectoryDTO> ChildDirectories { get; set; }
         public IEnumerable<FileDTO> Files { get; set; }
     }

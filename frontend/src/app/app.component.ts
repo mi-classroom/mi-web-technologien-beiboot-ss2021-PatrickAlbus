@@ -10,8 +10,13 @@ export class AppComponent {
 
   public filePath: string = null;
 
+  public imageDataJson: string = null;
+
   getFilePathOnChange($event){
-    console.log($event);
     this.filePath = $event;
+  }
+
+  getImageDataJsonOnChange($event){
+    this.imageDataJson = $event;
   }
 }
