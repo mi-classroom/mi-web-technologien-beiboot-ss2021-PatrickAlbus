@@ -1,3 +1,14 @@
+.filter{
+    display: block;
+}
+.filter .col-12 .row{
+    margin-bottom: 10px;
+}
+.filter .col-12 .row button.btn-primary{
+    margin: auto;
+    width: 50%;
+}
+
 .container {
     background-color: #e9ecef;
     padding: 0;
