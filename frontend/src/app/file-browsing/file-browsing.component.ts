@@ -16,6 +16,9 @@ export class FileBrowsingComponent{
   @Output() 
   imagePath = new EventEmitter<string>();
 
+  @Output()
+  imageDataJson = new EventEmitter<string>();
+
   public filteredDirectoryPaths: DirectoryDTO[] = [];
   private directoryPaths: DirectoryDTO[];
   public filter: string;
@@ -60,5 +63,9 @@ export class FileBrowsingComponent{
 
   getFilePathOnChange($event){
     this.imagePath.emit($event);
+  }
+
+  getImageDataJsonOnChange($event){
+    this.imageDataJson.emit($event);
   }
 }

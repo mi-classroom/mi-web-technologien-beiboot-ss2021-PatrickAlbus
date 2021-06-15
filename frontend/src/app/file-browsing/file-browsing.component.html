@@ -1,11 +1,13 @@
 <div class="container">
     <h6>Filter</h6>
-    <div class="row">
-        <div class="col-8">
-            <input type="text" class="form-control" id="searchBox" placeholder="Suche" [(ngModel)]="filter" (change)="filterChange()">
-        </div>
-        <div class="col-3">
-            <button type="submit" class="btn btn-primary" (click)="filterChange()">Search</button>
+    <div class="row filter">
+        <div class="col-12">
+            <div class="row">
+                <input type="text" class="form-control" id="searchBox" placeholder="Suche" [(ngModel)]="filter" (change)="filterChange()">
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-primary" (click)="filterChange()">Search</button>
+            </div>
         </div>
     </div>
         
@@ -14,6 +16,7 @@
     <div class="treeView">
         <app-tree-view *ngIf="filteredDirectoryPaths != null"
             (imagePath)="getFilePathOnChange($event)"
+            (imageDataJson)="getImageDataJsonOnChange($event)"
             [value]="filteredDirectoryPaths"
         ></app-tree-view>
     </div>

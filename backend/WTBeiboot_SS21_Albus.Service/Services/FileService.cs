@@ -9,6 +9,7 @@ using WTBeiboot_SS21_Albus.Service.Contracts.DTO;
 using MetadataExtractor;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace WTBeiboot_SS21_Albus.Service.Services
 {
@@ -49,6 +50,20 @@ namespace WTBeiboot_SS21_Albus.Service.Services
             }
             if(response.Count > 0) return response;
             return null;
+        }
+
+        public async Task<string> GetImageDataJson(string path)
+        {
+            try
+            {
+                string jsonString = File.ReadAllText(path + "/" + _configuration.GetValue<String>("Settings:ImageJson"));
+                
+                return jsonString;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<dynamic> GetExifOfFile(string path)

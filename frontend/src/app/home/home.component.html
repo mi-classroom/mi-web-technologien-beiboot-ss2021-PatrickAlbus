@@ -14,5 +14,11 @@
   </div>
 </div>
 
-
+<div *ngIf="imgJson" class="container">
+  <div class="row">
+    <div class="col-11">
+      <ngx-json-viewer [json]="imgJson" [expanded]="false"></ngx-json-viewer>
+    </div>
+  </div>
+</div>
 

@@ -12,6 +12,8 @@ import { TreeViewComponent } from './file-browsing/tree-view/tree-view.component
 import { environment } from '../environments/environment'
 import { BASE_PATH } from '../api/variables';
 
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
+
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { BASE_PATH } from '../api/variables';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    NgxJsonViewerModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' }
     ])
