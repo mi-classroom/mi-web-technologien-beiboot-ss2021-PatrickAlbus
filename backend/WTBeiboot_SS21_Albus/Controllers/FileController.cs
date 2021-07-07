@@ -51,5 +51,40 @@ namespace WTBeiboot_SS21_Albus.Controllers
                 return Ok(response.Result);
             }
         }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(409)]
+        [HttpPut("{filePath}")]
+        public async Task<IActionResult> UpdateExifOfFile(string filePath, [FromBody] IEnumerable<ExifDTO> exifData)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+
+                var result = "test";
+
+                if (result is null)
+                {
+                    return BadRequest("Update of metadata failed");
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                string message = "Unknown server exception";
+                if (ex != null)
+                {
+                    message = ex.Message + (ex.InnerException?.Message != "" ? " " + ex.InnerException?.Message : "");
+                    message = message.Replace(" See the inner exception for details.", "");
+                }
+                return StatusCode(500, new { message });
+            }
+
+        }
     }
 }

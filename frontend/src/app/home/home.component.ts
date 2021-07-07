@@ -1,21 +1,16 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO, StartupService, ConfigurationDTO } from "../../api/index";
-
+import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO } from "../../api/index";
 
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers: [StartupService, FileService ]
+  providers: [FileService ]
 })
 
 export class HomeComponent implements OnChanges {
-  private configurationDTO: ConfigurationDTO[] = [{
-    title: null,
-    values: []
-  }];
   public img = null;
   private exifData: ExifDTO[] = [];
   public imgJson = null;
@@ -26,11 +21,8 @@ export class HomeComponent implements OnChanges {
   @Input()
   imageDataJson: string = null;
 
-  constructor(private startupService: StartupService, private fileService: FileService, private domSanitizer: DomSanitizer) {
-    this.startupService.apiStartupGet()
-      .subscribe(result => {
-        this.configurationDTO = result;
-      });
+  constructor(private fileService: FileService, private domSanitizer: DomSanitizer) {
+    
   }
 
   ngOnChanges(changes: SimpleChanges){
@@ -53,6 +45,15 @@ export class HomeComponent implements OnChanges {
     }
   }
 
+  private saveMetadata(){
+    console.log(this.filePath);
+    console.log(this.exifData);
+    this.fileService.apiFilesFilePathPut(this.filePath, this.exifData)
+      .subscribe(result => {
+        console.log(result);
+      });
+  }
+
   private showJson() {
     this.imgJson = JSON.parse(this.imageDataJson);
   }
@@ -66,22 +67,7 @@ export class HomeComponent implements OnChanges {
       this.exifData = [];
       this.fileService.apiFilesExifPathGet(this.filePath)
         .subscribe(result => {
-          result.forEach(obj => {
-            this.configurationDTO.forEach(config => {
-              if (obj.name == config.title) {
-                obj.tags.forEach(tag => {
-                  config.values.forEach(configValue => {
-                    if (tag.name == configValue) {
-                      this.exifData.push({
-                        exifName: tag.name,
-                        exifDescription: tag.description
-                      });
-                    }
-                  })
-                })
-              }
-            })
-          })
+          this.exifData = result;
         })
   }
 }

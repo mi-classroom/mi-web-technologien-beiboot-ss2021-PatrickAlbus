@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO, StartupService, ConfigurationDTO } from "../../api/index";
+import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO } from "../../api/index";
 
 interface Service {
   readonly directoryName: string;
@@ -9,7 +9,7 @@ interface Service {
   selector: 'app-file-browsing',
   templateUrl: './file-browsing.component.html',
   styleUrls: ['./file-browsing.component.css'],
-  providers: [StartupService, DirectoryService, FileService ]
+  providers: [DirectoryService, FileService ]
 })
 
 export class FileBrowsingComponent{

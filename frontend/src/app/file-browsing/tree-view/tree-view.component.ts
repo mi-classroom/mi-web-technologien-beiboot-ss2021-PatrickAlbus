@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO, StartupService, ConfigurationDTO } from "../../../api/index";
+import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO } from "../../../api/index";
 
 
 @Component({

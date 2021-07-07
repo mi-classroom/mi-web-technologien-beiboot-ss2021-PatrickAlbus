@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using WTBeiboot_SS21_Albus.Service.Services;
 using WTBeiboot_SS21_Albus.Service.Contracts.Services;
+using WTBeiboot_SS21_Albus.Service.Helper;
+using WTBeiboot_SS21_Albus.Service.Contracts.Helper;
 
 namespace WTBeiboot_SS21_Albus.Service
 {
@@ -15,8 +17,11 @@ namespace WTBeiboot_SS21_Albus.Service
                 .RegisterType<FileService>()
                 .As<IFileService>();
             builder
-                .RegisterType<StartupService>()
-                .As<IStartupService>();
+                .RegisterType<ExifHelper>()
+                .As<IExifHelper>();
+            builder
+                .RegisterType<IPTCHelper>()
+                .As<IIPTCHelper>();
         }
     }
 }

@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { ExifDTO } from '../model/exifDTO';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -86,6 +87,56 @@ export class FileService {
 
         return this.httpClient.request<any>('get',`${this.basePath}/api/files/exif/${encodeURIComponent(String(path))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param filePath 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiFilesFilePathPut(filePath: string, body?: Array<ExifDTO>, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiFilesFilePathPut(filePath: string, body?: Array<ExifDTO>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiFilesFilePathPut(filePath: string, body?: Array<ExifDTO>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiFilesFilePathPut(filePath: string, body?: Array<ExifDTO>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (filePath === null || filePath === undefined) {
+            throw new Error('Required parameter filePath was null or undefined when calling apiFilesFilePathPut.');
+        }
+
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/_*+json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<any>('put',`${this.basePath}/api/files/${encodeURIComponent(String(filePath))}`,
+            {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
