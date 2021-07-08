@@ -20,10 +20,34 @@ In dem Ordner `backend\WTBeiboot_SS21_Albus` befindet sich die Datei `appsetting
     ],
     "Configuration": [
       {
-        "Title": "Exif IFD0",
-        "Values": [ "Image Description", "Artist", "Copyright" ]
+        //Only IPTC Data can be change
+        "Title": "Exif",
+        "Values": [
+          {
+            "Name": "ImageDescription",
+            "IsEditable": false
+          },
+          {
+            "Name": "Artist",
+            "IsEditable": false
+          },
+          {
+            "Name": "Copyright",
+            "IsEditable": false
+          }
+        ]
+      },
+      {
+        "Title": "IPTC",
+        "Values": [
+          {
+            "Name": "Headline",
+            "IsEditable": true
+          }
+        ]
       }
-    ]
+    ],
+    "ImageJson": "imageData-1.1.json"
   }
 ```
 Hier wird sowohl der Pfad angegeben, unter dem die Bilder sich anschließend befinden, die Dateistruktur, welche ausgelesen werden soll und die Einstellung, welche Exifdaten abgebildet werden sollen.
