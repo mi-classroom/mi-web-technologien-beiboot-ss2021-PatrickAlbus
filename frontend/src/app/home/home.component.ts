@@ -46,11 +46,8 @@ export class HomeComponent implements OnChanges {
   }
 
   private saveMetadata(){
-    console.log(this.filePath);
-    console.log(this.exifData);
-    this.fileService.apiFilesFilePathPut(this.filePath, this.exifData)
+    this.fileService.apiFilesPathPut(this.filePath, this.exifData)
       .subscribe(result => {
-        console.log(result);
       });
   }
 

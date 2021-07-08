@@ -3,6 +3,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Metadata.Profiles.Exif;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,20 +19,24 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
             using (var image = Image.Load(path))
             {
                 var exifProfile = image.Metadata.ExifProfile;
-                foreach (var _section in section)
+                if (exifProfile != null)
                 {
-                    foreach(var data in exifProfile.Values)
+                    foreach (var _section in section)
                     {
-                        if(_section.GetValue<string>("Name") == data.Tag.ToString())
+                        foreach (var data in exifProfile.Values)
                         {
-                            currentValues.Add(new ExifDTO
+                            if (_section.GetValue<string>("Name") == data.Tag.ToString())
                             {
-                                ExifName = _section.GetValue<string>("Name"),
-                                ExifDescription = data.GetValue().ToString(),
-                                ExifIsEditable = _section.GetValue<bool>("IsEditable")
-                            });
+                                currentValues.Add(new ExifDTO
+                                {
+                                    ExifName = _section.GetValue<string>("Name"),
+                                    ExifDescription = data.GetValue().ToString(),
+                                    //ExifIsEditable = _section.GetValue<bool>("IsEditable")
+                                    ExifIsEditable = false
+                                });
+                            }
                         }
-                    }                    
+                    }
                 }
             }
 

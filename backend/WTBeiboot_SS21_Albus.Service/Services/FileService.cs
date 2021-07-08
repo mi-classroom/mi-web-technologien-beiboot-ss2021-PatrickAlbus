@@ -90,5 +90,12 @@ namespace WTBeiboot_SS21_Albus.Service.Services
             return null;
         }
 
+        public async Task<bool> ChangeExifOfFile(string path, IEnumerable<ExifDTO> exifData)
+        {
+            var response = await _iptcHelper.SetIPTCProfile(path, exifData);
+            if (!response) return false;
+            return true;
+        }
+
     }
 }

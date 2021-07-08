@@ -12,5 +12,6 @@ namespace WTBeiboot_SS21_Albus.Service.Contracts.Services
         Task<IEnumerable<FileDTO>> GetFiles(string path);
         Task<string> GetImageDataJson(string path);
         Task<IEnumerable<ExifDTO>> GetExifOfFile(string path);
+        Task<bool> ChangeExifOfFile(string path, IEnumerable<ExifDTO> exifData);
     }
 }

@@ -55,8 +55,8 @@ namespace WTBeiboot_SS21_Albus.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
-        [HttpPut("{filePath}")]
-        public async Task<IActionResult> UpdateExifOfFile(string filePath, [FromBody] IEnumerable<ExifDTO> exifData)
+        [HttpPut("{path}")]
+        public async Task<IActionResult> UpdateExifOfFile(string path, [FromBody] IEnumerable<ExifDTO> exifData)
         {
             try
             {
@@ -65,14 +65,14 @@ namespace WTBeiboot_SS21_Albus.Controllers
                     return BadRequest("Invalid model object");
                 }
 
-                var result = "test";
+                var response = await _service.ChangeExifOfFile(HttpUtility.UrlDecode(path), exifData);
 
-                if (result is null)
+                if (!response)
                 {
                     return BadRequest("Update of metadata failed");
                 }
 
-                return Ok(result);
+                return Ok(response);
             }
             catch (Exception ex)
             {

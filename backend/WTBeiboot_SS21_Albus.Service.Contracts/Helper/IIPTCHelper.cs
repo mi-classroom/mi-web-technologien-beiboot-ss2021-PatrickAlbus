@@ -11,5 +11,6 @@ namespace WTBeiboot_SS21_Albus.Service.Contracts.Helper
     public interface IIPTCHelper
     {
         Task<IEnumerable<ExifDTO>> GetIPTCProfile(string path, List<ExifDTO> currentValues, IEnumerable<IConfigurationSection> section);
+        Task<bool> SetIPTCProfile(string path, IEnumerable<ExifDTO> exifData);
     }
 }
