@@ -1,6 +1,6 @@
 # Nutzung von Docker Compose
 
-* Status: vorgeschlagen
+* Status: akzeptiert
 * Entscheider: [Patrick Albus](https://github.com/Narua2010)  
 * Datum: 15.05.2021
 
