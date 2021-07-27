@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { DirectoryService } from './api/directory.service';
 import { FileService } from './api/file.service';
-import { StartupService } from './api/startup.service';
 
 @NgModule({
   imports:      [],
@@ -13,8 +12,7 @@ import { StartupService } from './api/startup.service';
   exports:      [],
   providers: [
     DirectoryService,
-    FileService,
-    StartupService ]
+    FileService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {

@@ -1,6 +1,6 @@
 # Nutzung von Docker Compose
 
-* Status: vorgeschlagen
+* Status: akzeptiert
 * Entscheider: [Patrick Albus](https://github.com/Narua2010)  
 * Datum: 15.05.2021
 
@@ -8,14 +8,29 @@ Technische Geschichte: Das Beibootprojekt in dem Modul Webtechnologien soll mith
 
 ## Kontext und Problemstellung
 
-Das Beibootprojekt soll mithilfe von Docker gestartet werden. Dabei soll weiterhin beachtet werden, dass das Frontend und das Backend getrennt voneinander laufen sollen.
+Damit zum einen die beteiligen Personen möglichst zügig und unkompliziert das Projekt lauffähig auf ihren individuellen Systemen (MacOS, Windows und Linux) für die Entwicklung vorfinden können und zum anderen das Projekt automatisiert in eine Produktionsumgebung veröffentlicht werden kann, wird eine Virtualisierungs- bzw. Containerlösung benötigt. Da verschiedene Komponenten (Backend und Frontend) zur Realisierung des Projekts benötigt werden, wird auch eine sinnvolle Orchestrierung der min. zwei, ggf. in Zukunft +n Systeme benötigt. Das Ziel ist es den Overheat für Installation, Konfiguration und Aktualisierung durch die Automatisierung gering zu halten.
 
 ## Betrachtete Optionen
 
-* Docker Compose
+* Docker + docker-compose
+* Nomad
+* Rancher
 
 ## Ergebnis der Entscheidung
 
-Sowohl für das Backend, als auch für das Frontend wird ein Dockerfile benötigt. Darüber hinaus wird eine Docker-Compose Datei erstellt.
-Mithilfe von Docker Compose können über eine Datei mehrere Dienste mit einem einzigen Befehl gestartet bzw. beendet werden.
-Der große Vorteil der Verwendung von Docker Compose besteht darin, dass diese Datei im Stammverzeichnis des Repositorys abgelegt werden kann, wohingegen die Dockerfiles weiterhin in den Quellcodeverzeichnissen liegen. Dadurch kann eine andere Person einfach an dem Projekt mitwirken. Dafür muss er lediglich das Repository klonen und die Compose-App starten.
+Durch die vorhandene Erfahrung wurde sich für Docker mithilfe von docker-compose entschieden. Dadurch bleibt die Einarbeitungszeit relativ gering. Ebenso gilt Docker als Quasistandard.
+
+### Positive Konsequenzen
+
+* Die Installation von Entwicklungskomponenten ist nicht notwendig
+* Konfiguration der Container ist an einem zentralen Ort möglich
+* Erweiterung neuer Komponenten ist leicht möglich
+
+### Negative Konsequenzen
+
+* Docker wird als Abhängigkeit benötigt und muss entsprechend auf allen Systemen installiert werden
+* Benötigt mehr Systemressourcen
+
+## Links
+
+* [docker-compose Alternativen](https://www.slant.co/options/11648/alternatives/~docker-compose-alternatives)

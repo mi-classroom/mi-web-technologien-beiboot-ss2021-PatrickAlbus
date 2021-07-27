@@ -7,8 +7,11 @@
       <div class="row" *ngFor="let value of exifData">
         <div class="form-group">
           <label for="{{value.exifName}}">{{value.exifName}}</label>
-          <input type="text" readonly class="form-control" id="{{value.exifName}}" value="{{value.exifDescription}}">
+          <input type="text" [readonly]="!value.exifIsEditable" class="form-control" id="{{value.exifName}}" [(ngModel)]="value.exifDescription">
         </div>
+      </div>
+      <div class="row">
+        <button type="button" class="btn btn-primary" (click)="saveMetadata()">Metadaten speichern</button>
       </div>
     </div>
   </div>

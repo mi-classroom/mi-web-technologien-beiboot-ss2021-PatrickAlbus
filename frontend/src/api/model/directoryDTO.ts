@@ -14,6 +14,7 @@ import { FileDTO } from './fileDTO';
 export interface DirectoryDTO { 
     directoryName?: string;
     directoryPath?: string;
+    imageDataJson?: string;
     childDirectories?: Array<DirectoryDTO>;
     files?: Array<FileDTO>;
 }

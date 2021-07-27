@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using WTBeiboot_SS21_Albus.Service.Contracts.Services;
+using WTBeiboot_SS21_Albus.Service.Contracts.Helper;
 using WTBeiboot_SS21_Albus.Service.Contracts.DTO;
 using MetadataExtractor;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using SixLabors.ImageSharp.Metadata.Profiles.Exif;
+using SixLabors.ImageSharp.Metadata.Profiles.Iptc;
+using SixLabors.ImageSharp;
 
 namespace WTBeiboot_SS21_Albus.Service.Services
 {
@@ -17,12 +21,15 @@ namespace WTBeiboot_SS21_Albus.Service.Services
     {
         private readonly IConfiguration _configuration;
         private readonly IHostEnvironment _hostEnvironment;
-
-        public FileService(IConfiguration configuration,  IHostEnvironment hostEnvironment)
+        private readonly IExifHelper _exifHelper;
+        private readonly IIPTCHelper _iptcHelper;
+        public FileService(IConfiguration configuration,  IHostEnvironment hostEnvironment, IExifHelper exifHelper, IIPTCHelper iptcHelper)
         {
             _configuration = configuration;
             _hostEnvironment = hostEnvironment;
-        }
+            _exifHelper = exifHelper;
+            _iptcHelper = iptcHelper;
+    }
 
         public async Task<IEnumerable<FileDTO>> GetFiles(string path)
         {
@@ -66,11 +73,29 @@ namespace WTBeiboot_SS21_Albus.Service.Services
             }
         }
 
-        public async Task<dynamic> GetExifOfFile(string path)
+        public async Task<IEnumerable<ExifDTO>> GetExifOfFile(string path)
         {
-            if(File.Exists(path)) return ImageMetadataReader.ReadMetadata(path);
+            IEnumerable<ExifDTO> response = new List<ExifDTO>();
+            if (File.Exists(path))
+            {
+                var valuesSection = _configuration.GetSection("Settings:Configuration");
+                foreach (IConfigurationSection section in valuesSection.GetChildren())
+                {
+                    if (section.GetValue<string>("Title") == "Exif" && section.GetSection("Values")?.GetChildren().ToList().Count != 0) response = await _exifHelper.GetExifProfile(path, response.Cast<ExifDTO>().ToList(), section.GetSection("Values")?.GetChildren());
+                    if (section.GetValue<string>("Title") == "IPTC" && section.GetSection("Values")?.GetChildren().ToList().Count != 0) response = await _iptcHelper.GetIPTCProfile(path, response.Cast<ExifDTO>().ToList(), section.GetSection("Values")?.GetChildren());
+                 }
+                return response;
+            }
 
             return null;
         }
+
+        public async Task<bool> ChangeExifOfFile(string path, IEnumerable<ExifDTO> exifData)
+        {
+            var response = await _iptcHelper.SetIPTCProfile(path, exifData);
+            if (!response) return false;
+            return true;
+        }
+
     }
 }

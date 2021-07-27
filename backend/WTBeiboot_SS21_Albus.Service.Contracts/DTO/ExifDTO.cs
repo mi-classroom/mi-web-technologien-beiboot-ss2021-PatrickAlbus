@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace WTBeiboot_SS21_Albus.Service.Contracts.DTO
 {
-    public class ConfigurationDTO
+    public class ExifDTO
     {
-        public string Title { get; set; }
-        public List<string> Values { get; set; }
+        public string ExifName { get; set; }
+        public string ExifDescription { get; set; }
+        public bool ExifIsEditable { get; set; }
     }
 }

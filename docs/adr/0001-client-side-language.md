@@ -1,6 +1,6 @@
 # Auswahl der/des clientseitigen Programmiersprache/Framework
 
-* Status: vorgeschlagen
+* Status: akzeptiert
 * Entscheider: [Patrick Albus](https://github.com/Narua2010)  
 * Datum: 17.04.2021
 
