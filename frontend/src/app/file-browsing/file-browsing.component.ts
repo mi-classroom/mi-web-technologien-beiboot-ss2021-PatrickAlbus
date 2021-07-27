@@ -8,7 +8,7 @@ interface Service {
 @Component({
   selector: 'app-file-browsing',
   templateUrl: './file-browsing.component.html',
-  styleUrls: ['./file-browsing.component.css'],
+  styleUrls: ['./file-browsing.component.scss'],
   providers: [DirectoryService, FileService ]
 })
 

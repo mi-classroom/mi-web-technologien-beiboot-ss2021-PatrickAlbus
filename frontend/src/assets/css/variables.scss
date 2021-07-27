@@ -1,0 +1,128 @@
+:root{
+    
+  /* Farben
+  -----------------------------------------------------------------------------*/
+
+  --medium: #666;
+  --dark: #444;
+  --darker: #222;
+  --darkest: #000;
+  --light: #B4B4B4;
+  --lighter: #F2F2F2;
+  --lightest:#fff;
+  --lighten: rgba(255,255,255,0.1);
+  --lighten-strong: rgba(255,255,255,0.3);
+  --accent: #FFCC00;
+  --error: #cc0000;
+  --darken: rgba(0,0,0,.04);
+  --darken-medium: rgba(0,0,0,.1);
+  --darken-strong: rgba(0,0,0,.2);
+
+
+  /* Viewports
+  -----------------------------------------------------------------------------*/
+
+  --vp-medium: 720px;
+  --vp-large: 1024px;
+  --vp-xlarge: 1400px;
+  --vp-xxlarge: 1700px;
+  --vp-3xlarge: 2000px;
+  --vp-4xlarge: 2300px;
+
+  /* Größen und Abstände
+  -----------------------------------------------------------------------------*/
+
+  --bfs: 1rem;
+
+  /* Entlang der Fibonacci Reihe */
+
+  --xxxs: calc(var(--bfs) * 0.2);
+  --xxs:  calc(var(--bfs) * 0.3);
+  --xs:   calc(var(--bfs) * 0.5);
+  --s:    calc(var(--bfs) * 0.8);
+  --m:    calc(var(--bfs) * 1.3);
+  --l:    calc(var(--bfs) * 2.1);
+  --xl:   calc(var(--bfs) * 3.4);
+  --xxl:  calc(var(--bfs) * 5.5);
+
+  /* Schriften
+  -----------------------------------------------------------------------------*/
+
+  --font-sans-serif: "IBMPlexSans",
+  sans-serif;
+  --font-icons: 'Material Icons';
+  --font-code: Menlo,
+  Consolas,
+  "Courier New",
+  Courier,
+  "Liberation Mono",
+  monospace;
+
+
+  /* Schriftgewichte
+  -----------------------------------------------------------------------------*/
+  --fw-light: 200;
+  --fw-regular: 300;
+  --fw-semibold: 400;
+  --fw-bold: 600;
+
+
+  /* Zeilenabstände
+  -----------------------------------------------------------------------------*/
+  --lh-tight: 120%;
+  --lh-normal: 140%;
+  --lh-loose: 160%;
+
+  --lh-headlines: --lh-tight;
+
+
+  /* Animationen (Entlang der Fibonacci Reihe)
+  -----------------------------------------------------------------------------*/
+
+  --tr-slow: 0.8s;
+  --tr-medium: 0.5s;
+  --tr-fast: 0.3s;
+
+  /* Kacheln
+  -----------------------------------------------------------------------------*/
+
+  --tile-xxs: 8em;
+  --tile-xs: 13em;
+  --tile-s: 21em;
+
+  /* Levels (z-Index)
+  -----------------------------------------------------------------------------*/
+
+  --level-background: 0;
+  --level-content: 10;
+  --level-content-nav: 20;
+  --level-section-nav: 30;
+  --level-overall-nav: 40;
+
+
+  /* Schatten
+  -----------------------------------------------------------------------------*/
+  --shadow: 1px 1px --xxs rgba(0, 0, 0, 0.4);
+  --shadow-xs: 1px 1px --xxxs rgba(0, 0, 0, 0.4);
+  --shadow-s: 1px 1px --s rgba(0, 0, 0, 0.4);
+  --shadow-m: 1px 1px --m rgba(0, 0, 0, 0.4);
+  --shadow-top: 0px 0px --xxs rgba(0,0,0,0.4);
+  --shadow-top-s: 0px 0px --s rgba(0,0,0,0.4);
+  --shadow-top-m: 0px 0px --m rgba(0,0,0,0.4);
+
+
+  /* Opacity
+  -----------------------------------------------------------------------------*/
+  --op-medium: 0.5;
+  --op-low: 0.2;
+
+
+  /* Misc
+  -----------------------------------------------------------------------------*/
+
+  --border-stroke-weight: 2px;
+  --border-stroke-weight-s: 1px;
+  --inner-shadow: inset 0 0 --s rgba(0, 0, 0, 10);
+  --radius-s: 4px;
+
+}

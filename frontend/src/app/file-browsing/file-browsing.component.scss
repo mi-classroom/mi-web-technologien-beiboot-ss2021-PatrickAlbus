@@ -1,3 +1,28 @@
+.container {
+    background-color: var(--darker);
+    font-style: var(--font-sans-serif);
+    padding: 0;
+    height: 100vh;
+
+    header{
+        color: var(--accent);
+        font-size: var(--l);
+        padding: var(--bfs);
+    }
+
+    .treeView{
+        overflow-y: scroll;
+        max-height: 75vh;
+    }
+}
+
+
+
+
+
+
+
+
 .filter{
     display: block;
 }
@@ -7,13 +32,6 @@
 .filter .col-12 .row button.btn-primary{
     margin: auto;
     width: 50%;
-}
-
-.container {
-    background-color: #e9ecef;
-    padding: 0;
-    height: 100%;
-    min-height: 100vh;
 }
 
 .container .row{
