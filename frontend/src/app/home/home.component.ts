@@ -65,6 +65,6 @@ export class HomeComponent implements OnChanges {
       this.fileService.apiFilesExifPathGet(this.filePath)
         .subscribe(result => {
           this.exifData = result;
-        })
+        });
   }
 }

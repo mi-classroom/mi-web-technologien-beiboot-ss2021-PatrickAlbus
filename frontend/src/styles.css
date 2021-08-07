@@ -14,3 +14,20 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+/* JSON Viewe Color  */
+.segment-key {
+  color: var(--accent) !important;
+}
+.segment-separator{
+  color: var(--accent) !important;
+}
+.segment-type-boolean > .segment-main > .segment-value {
+  color: var(--lightest) !important;
+}
+.segment-type-string > .segment-main > .segment-value {
+  color: var(--lightest) !important;
+}
+.segment-type-number > .segment-main > .segment-value {
+  color:  var(--lightest) !important;
+}

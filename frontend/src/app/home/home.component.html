@@ -1,31 +1,12 @@
 <div class="container">
-  <div *ngIf="img">
-    <div class="row">
-      <div class="col-6">
+  <div *ngIf="img" class="imageView">
         <img [src]="img" />
-      </div>
-      <div class="col-6">
-        <div class="row" *ngFor="let value of exifData">
-          <div class="form-group">
-            <label for="{{value.exifName}}">{{value.exifName}}</label>
-            <input type="text" [readonly]="!value.exifIsEditable" class="form-control" id="{{value.exifName}}" [(ngModel)]="value.exifDescription">
-          </div>
-        </div>
-        <div class="row">
-          <button type="button" class="btn btn-primary" (click)="saveMetadata()">Metadaten speichern</button>
-        </div>
-      </div>
-      <div class="row">
-        <button type="button" class="btn btn-primary" (click)="saveMetadata()">Metadaten speichern</button>
-      </div>
-    </div>
   </div>
   
-  <div *ngIf="imgJson">
-    <div class="row">
-      <div class="col-11">
-        <ngx-json-viewer [json]="imgJson" [expanded]="false"></ngx-json-viewer>
-      </div>
-    </div>
+  <div *ngIf="imgJson" class="json-viewer">
+    <ngx-json-viewer [json]="imgJson" [expanded]="true"></ngx-json-viewer>
   </div>
+
+  <footer>
+  </footer>
 </div>
