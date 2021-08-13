@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using WTBeiboot_SS21_Albus.Service.Contracts.Services;
 using WTBeiboot_SS21_Albus.Service.Contracts.DTO;
+using WTBeiboot_SS21_Albus.Service.Contracts.DTO.ExifDTO;
 using WTBeiboot_SS21_Albus.Logger;
 using System.Web;
 
@@ -56,7 +57,7 @@ namespace WTBeiboot_SS21_Albus.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
         [HttpPut("{path}")]
-        public async Task<IActionResult> UpdateExifOfFile(string path, [FromBody] IEnumerable<ExifDTO> exifData)
+        public async Task<IActionResult> UpdateExifOfFile(string path, [FromBody] ExifDTO exifData)
         {
             try
             {

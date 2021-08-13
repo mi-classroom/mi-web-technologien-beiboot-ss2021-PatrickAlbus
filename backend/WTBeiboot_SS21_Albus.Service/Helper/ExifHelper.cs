@@ -8,13 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WTBeiboot_SS21_Albus.Service.Contracts.DTO;
+using WTBeiboot_SS21_Albus.Service.Contracts.DTO.ExifDTO;
 using WTBeiboot_SS21_Albus.Service.Contracts.Helper;
 
 namespace WTBeiboot_SS21_Albus.Service.Helper
 {
     public class ExifHelper : IExifHelper
     {
-        public async Task<IEnumerable<ExifDTO>> GetExifProfile(string path, List<ExifDTO> currentValues, IEnumerable<IConfigurationSection> section)
+        public async Task<IEnumerable<ExifDataDTO>> GetExifProfile(string path, List<ExifDataDTO> currentValues, IEnumerable<IConfigurationSection> section)
         {
             using (var image = Image.Load(path))
             {
@@ -27,7 +28,7 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
                         {
                             if (_section.GetValue<string>("Name") == data.Tag.ToString())
                             {
-                                currentValues.Add(new ExifDTO
+                                currentValues.Add(new ExifDataDTO
                                 {
                                     ExifName = _section.GetValue<string>("Name"),
                                     ExifDescription = data.GetValue().ToString(),

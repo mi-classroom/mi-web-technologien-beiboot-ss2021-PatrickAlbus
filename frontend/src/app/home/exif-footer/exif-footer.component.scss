@@ -1,0 +1,57 @@
+.container{
+    margin: 1vh 1vh 1vh 1vh;
+    color: var(--light);
+    font-style: var(--font-sans-serif);
+    height: 4vh;
+    max-width: none;
+    max-height: 50vh;
+    width: auto;
+
+    .accent{
+        color: var(--accent);
+    }
+
+    .showButton{
+        cursor: pointer;
+    }
+
+    .exifDataContainer{
+        display: none;
+        overflow-y: scroll;
+        margin-top: 25px;
+        max-height: 40vh;
+
+        button{
+            width: 150px;
+            color: var(--darkest);
+            background-color: var(--accent);
+            border-color: var(--accent);
+            bottom: 0;
+            position: absolute;
+            margin-bottom: 25px;
+            .material-icons{
+                position: absolute;
+                margin-left: -25px;
+            }
+        }
+
+        input, input:hover, input:focus, input:active, textarea, textarea:hover, textarea:focus, textarea:active{
+            outline: 0;
+            border-width: 0;
+            border-radius: unset;
+            background-color: var(--medium);
+            box-shadow: none;
+            color: var(--lightest);
+
+            background-image: linear-gradient(to left, var(--lighten-strong) 100%,var(--lighten-strong) 100%);
+            background-repeat: no-repeat;
+            background-position: 0 calc(100% + 3px),0 0;
+            background-size: 100% 6px;
+        }
+
+        .row{
+            margin-right: unset;
+            margin-left: unset;
+        }
+    }
+}

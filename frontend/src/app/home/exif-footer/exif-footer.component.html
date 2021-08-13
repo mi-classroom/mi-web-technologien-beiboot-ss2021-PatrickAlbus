@@ -1,0 +1,37 @@
+<div class="container exifContainer" *ngIf="_exifData">
+    <div class="row">
+        <span class="material-icons">crop_7_5</span>
+        Größe: {{_exifData.size}}
+    </div>
+    <div class="row">
+        <span class="material-icons accent showButton" (click)="showExif()">
+        list
+        </span>
+        IPTC: -
+    </div>
+    <div class="row exifDataContainer">
+        <div class="row">
+            <ng-container *ngFor="let language of _exifConfiguration">
+                <div [ngClass]="'col-' + 12 / _exifConfiguration.length">
+                    <ng-container *ngFor="let item of language.Values">
+                        <div class="row">
+                            <ng-container *ngIf="item.Type == 'Text'">
+                                <input type="text" class="form-control" id="{{language.Language + '' + item.Name}}" (keyup)="textChange(language.Language + '' + item.Name, item.MaxLenght, item.Value)" [(ngModel)]="item.Value" maxlength="{{item.MaxLenght}}">
+                                <label for="{{language.Language + '' + item.Name}}">{{item.Label}}</label>
+                            </ng-container>
+                            <ng-container *ngIf="item.Type == 'Textarea'">
+                                <textarea class="form-control" id="{{language.Language + '' + item.Name}}" rows="5" (keyup)="textChange(language.Language + '' + item.Name, item.MaxLenght, item.Value)" [(ngModel)]="item.Value" maxlength="{{item.MaxLenght}}"></textarea>
+                                <label for="{{language.Language + '' + item.Name}}">{{item.Label}}</label>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">
+            <span class="material-icons">save</span>
+            <span>speichern</span>
+        </button>
+    </div>
+</div>

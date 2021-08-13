@@ -9,9 +9,11 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { ExifDataDTO } from './exifDataDTO';
+import { ConfigurationValueLanguagesDTO } from './configurationValueLanguagesDTO';
 
-export interface ExifDTO { 
-    size?: string;
-    exifData?: Array<ExifDataDTO>;
+export interface ConfigurationValuesDTO { 
+    name?: string;
+    type?: string;
+    maxLenght?: string;
+    languages?: Array<ConfigurationValueLanguagesDTO>;
 }

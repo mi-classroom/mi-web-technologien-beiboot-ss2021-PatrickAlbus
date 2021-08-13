@@ -22,6 +22,9 @@ namespace WTBeiboot_SS21_Albus.Service
             builder
                 .RegisterType<IPTCHelper>()
                 .As<IIPTCHelper>();
+            builder
+                .RegisterType<StartupService>()
+                .As<IStartupService>();
         }
     }
 }

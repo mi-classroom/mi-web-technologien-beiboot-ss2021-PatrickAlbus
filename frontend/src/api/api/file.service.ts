@@ -143,10 +143,10 @@ export class FileService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiFilesPathPut(path: string, body?: Array<ExifDTO>, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiFilesPathPut(path: string, body?: Array<ExifDTO>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiFilesPathPut(path: string, body?: Array<ExifDTO>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiFilesPathPut(path: string, body?: Array<ExifDTO>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiFilesPathPut(path: string, body?: ExifDTO, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiFilesPathPut(path: string, body?: ExifDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiFilesPathPut(path: string, body?: ExifDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiFilesPathPut(path: string, body?: ExifDTO, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (path === null || path === undefined) {
             throw new Error('Required parameter path was null or undefined when calling apiFilesPathPut.');

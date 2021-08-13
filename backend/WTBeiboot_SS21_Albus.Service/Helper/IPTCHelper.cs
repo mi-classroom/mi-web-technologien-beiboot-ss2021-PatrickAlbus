@@ -9,13 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WTBeiboot_SS21_Albus.Service.Contracts.DTO;
+using WTBeiboot_SS21_Albus.Service.Contracts.DTO.ExifDTO;
 using WTBeiboot_SS21_Albus.Service.Contracts.Helper;
 
 namespace WTBeiboot_SS21_Albus.Service.Helper
 {
     public class IPTCHelper : IIPTCHelper
     {
-        public async Task<IEnumerable<ExifDTO>> GetIPTCProfile(string path, List<ExifDTO> currentValues, IEnumerable<IConfigurationSection> section)
+        public async Task<IEnumerable<ExifDataDTO>> GetIPTCProfile(string path, List<ExifDataDTO> currentValues, IEnumerable<IConfigurationSection> section)
         {
             using (var image = Image.Load(path))
             {
@@ -28,7 +29,7 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
                         {
                             if (_section.GetValue<string>("Name") == data.Tag.ToString())
                             {
-                                currentValues.Add(new ExifDTO
+                                currentValues.Add(new ExifDataDTO
                                 {
                                     ExifName = _section.GetValue<string>("Name"),
                                     ExifDescription = data.Value,
@@ -44,7 +45,7 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
             return currentValues;
         }
 
-        public async Task<bool> SetIPTCProfile(string path, IEnumerable<ExifDTO> exifData)
+        public async Task<bool> SetIPTCProfile(string path, IEnumerable<ExifDataDTO> exifData)
         {
             if (File.Exists(path))
             {
@@ -53,7 +54,7 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
                     var iptcProfile = image.Metadata.IptcProfile;
                     if (iptcProfile != null)
                     {
-                        foreach (ExifDTO rawData in exifData)
+                        foreach (ExifDataDTO rawData in exifData)
                         {
                             foreach (var iptcData in iptcProfile.Values)
                             {

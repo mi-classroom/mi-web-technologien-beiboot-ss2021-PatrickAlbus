@@ -31,3 +31,5 @@ code {
 .segment-type-number > .segment-main > .segment-value {
   color:  var(--lightest) !important;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

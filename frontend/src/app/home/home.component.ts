@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO } from "../../api/index";
+import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO, ConfigurationDTO } from "../../api/index";
 
 
 @Component({
@@ -12,8 +12,11 @@ import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO } from ".
 
 export class HomeComponent implements OnChanges {
   public img = null;
-  private exifData: ExifDTO[] = [];
+  private exifData: ExifDTO = null;
   public imgJson = null;
+
+  @Input()
+  startupConfiguration: ConfigurationDTO[] = null;
 
   @Input()
   filePath: string = null;
@@ -22,7 +25,6 @@ export class HomeComponent implements OnChanges {
   imageDataJson: string = null;
 
   constructor(private fileService: FileService, private domSanitizer: DomSanitizer) {
-    
   }
 
   ngOnChanges(changes: SimpleChanges){
@@ -45,13 +47,14 @@ export class HomeComponent implements OnChanges {
     }
   }
 
-  private saveMetadata(){
-    this.fileService.apiFilesPathPut(this.filePath, this.exifData)
-      .subscribe(result => {
-      });
-  }
+  // private saveMetadata(){
+  //   this.fileService.apiFilesPathPut(this.filePath, this.exifData)
+  //     .subscribe(result => {
+  //     });
+  // }
 
   private showJson() {
+    this.exifData = null;
     this.imgJson = JSON.parse(this.imageDataJson);
   }
 
@@ -61,7 +64,7 @@ export class HomeComponent implements OnChanges {
           this.img = this.domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + result.fileContents);;
         });
       
-      this.exifData = [];
+      this.exifData = null;
       this.fileService.apiFilesExifPathGet(this.filePath)
         .subscribe(result => {
           this.exifData = result;
