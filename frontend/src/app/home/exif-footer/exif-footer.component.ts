@@ -47,8 +47,8 @@ export class ExifFooterComponent implements OnChanges{
     }
 
     private updateConfiguration(){
+        this._exifConfiguration = [];
         if(this.startupConfiguration != null && this.startupConfiguration.length > 0){
-            console.log(this.startupConfiguration);
             this.startupConfiguration.forEach(element => {
                 if(element.values.length > 0){
                     element.values.forEach(value => {
