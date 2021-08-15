@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ExifFooterComponent } from './home/exif-footer/exif-footer.component'
 import { FileBrowsingComponent } from './file-browsing/file-browsing.component';
-import { TreeViewComponent } from './file-browsing/tree-view/tree-view.component';
 
 import { environment } from '../environments/environment'
 import { BASE_PATH } from '../api/variables';
@@ -22,8 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppComponent,
     HomeComponent,
     ExifFooterComponent,
-    FileBrowsingComponent,
-    TreeViewComponent
+    FileBrowsingComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

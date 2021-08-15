@@ -9,6 +9,6 @@ namespace WTBeiboot_SS21_Albus.Service.Contracts.Services
 {
     public interface IDirectoryService
     {
-        Task<IEnumerable<DirectoryDTO>> GetDirectory(string path = null, string previousPath = null);
+        Task<DirectoryDTO> GetDirectory(string path = null, string previousPath = null);
     }
 }

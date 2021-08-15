@@ -62,9 +62,9 @@ export class DirectoryService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiDirectoriesGet(path?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<DirectoryDTO>>;
-    public apiDirectoriesGet(path?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<DirectoryDTO>>>;
-    public apiDirectoriesGet(path?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<DirectoryDTO>>>;
+    public apiDirectoriesGet(path?: string, observe?: 'body', reportProgress?: boolean): Observable<DirectoryDTO>;
+    public apiDirectoriesGet(path?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DirectoryDTO>>;
+    public apiDirectoriesGet(path?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DirectoryDTO>>;
     public apiDirectoriesGet(path?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -90,7 +90,7 @@ export class DirectoryService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<DirectoryDTO>>('get',`${this.basePath}/api/directories`,
+        return this.httpClient.request<DirectoryDTO>('get',`${this.basePath}/api/directories`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

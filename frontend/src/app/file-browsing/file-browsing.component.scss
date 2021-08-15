@@ -7,12 +7,76 @@
     header{
         color: var(--accent);
         font-size: var(--l);
-        padding: var(--bfs);
+        padding: var(--m);
     }
 
-    .treeView{
-        overflow-y: scroll;
-        max-height: 75vh;
+    .filter{
+        margin-bottom: 20px;
+        input{
+            margin-left: var(--m);
+            margin-right: var(--m);
+            width: calc(100% - calc(2 * var(--m)));
+
+            outline: 0;
+            border-width: 0;
+            border-radius: unset;
+            background-color: var(--darker);
+            box-shadow: none;
+            color: var(--lightest);
+            background-image: linear-gradient(to left, var(--accent) 100%,var(--accent) 100%);
+            background-repeat: no-repeat;
+            background-position: 0 calc(100% + 3px),0 0;
+            background-size: 100% 5px;
+        }
+    }
+
+    section{
+        height: 100px;
+        div{
+            color: var(--light);
+            display: flex;
+            padding-left: var(--m);
+            margin-bottom: 5px;
+
+            a{
+                display: flex;
+                cursor: pointer;
+            }
+            .location{
+                color: var(--lightest);
+            }
+            .material-icons{
+                margin-right: 5px;
+            }
+        }
+    }
+    
+    nav{
+        color: var(--lightest);
+        
+        ul{
+            margin-bottom: 0px;
+            padding-left: var(--m);
+            li{
+                list-style: none;
+                margin-bottom: 5px;
+                display: flex;
+    
+                a{
+                    display: flex;
+                    cursor: pointer;
+                }
+            }
+        }
+        
+        .material-icons{
+            color: var(--accent);
+            margin-right: 5px;
+            cursor: pointer;
+        }
+        .info{
+            margin-left: 10px;
+        }
     }
 }
 

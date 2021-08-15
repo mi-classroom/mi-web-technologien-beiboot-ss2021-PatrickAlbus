@@ -24,10 +24,10 @@ namespace WTBeiboot_SS21_Albus.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
-        [ProducesResponseType(typeof(IEnumerable<DirectoryDTO>), 200)]
+        [ProducesResponseType(typeof(DirectoryDTO), 200)]
         [ProducesResponseType(404)]
         [HttpGet("")]
-        public async Task<IActionResult> GetRootDirectory(string path = null)
+        public async Task<IActionResult> GetDirectory(string path = null)
         {
             string previousPath = (path != null) ? path.Replace("\\" + path.Split("\\").Last(), "") : null;
             

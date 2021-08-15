@@ -2,25 +2,84 @@
     <header>
         cda_
     </header>
-    <h6>Filter</h6>
+
     <div class="row filter">
-        <div class="col-12">
-            <div class="row">
-                <input type="text" class="form-control" id="searchBox" placeholder="Suche" [(ngModel)]="filter" (change)="filterChange()">
-            </div>
-            <div class="row">
-                <button type="submit" class="btn btn-primary" (click)="filterChange()">Search</button>
-            </div>
-        </div>
+        <input type="text" class="form-control" id="searchBox" placeholder="Suche" [(ngModel)]="filter" (keyup)="filterChange()">
     </div>
-        
     
-    <h6>Verzeichnisse</h6>
-    <div class="treeView">
-        <app-tree-view *ngIf="filteredDirectoryPaths != null"
-            (imagePath)="getFilePathOnChange($event)"
-            (imageDataJson)="getImageDataJsonOnChange($event)"
-            [value]="filteredDirectoryPaths"
-        ></app-tree-view>
-    </div>
+    <section *ngIf="directoryPaths != null">
+        <div class="found">
+            <ng-container *ngIf="directoryPaths.childDirectories != null">
+                <span class="material-icons">
+                    folder_open
+                </span>
+                {{directoryPaths.childDirectories.length}} Verzeichnisse gefunden
+            </ng-container>
+            
+            <ng-container *ngIf="directoryPaths.files != null">
+                <span class="material-icons">
+                    image
+                </span>
+                {{directoryPaths.files.length}} Bilder gefunden
+            </ng-container>
+        </div>
+
+        <div *ngIf="location.length > 0" class="location">
+            <span class="material-icons location_on">
+                location_on
+            </span>
+            <ng-container *ngFor="let item of location; let i = index">
+                <span *ngIf="i == 0">{{item}}</span>
+                <span *ngIf="i != 0">/{{item}}</span>
+            </ng-container>
+        </div>
+
+        <div *ngIf="directoryPaths.imageDataJson != null" class="download">
+            <a (click)="downloadFolder()">
+                <span class="material-icons">
+                    download
+                </span>
+                Download Folder
+            </a>
+        </div>
+    </section>
+    
+    
+    
+
+    <nav *ngIf="directoryPaths != null">
+        <ul *ngIf="previousPath.length > 0">
+            <li>
+                <a (click)="gotoPreviousPath()">
+                    <span class="material-icons">
+                        chevron_left
+                    </span>
+                    ...
+                </a>
+            </li>
+        </ul>
+        <ul *ngIf="directoryPaths.childDirectories != null && directoryPaths.childDirectories.length > 0">
+            <li *ngFor="let item of directoryPaths.childDirectories">
+                <a (click)="nextDirectory(item.directoryPath, item.directoryName)">
+                    <span class="material-icons">
+                        folder_open
+                    </span>
+                    {{item.directoryName}}
+                </a>
+                <span *ngIf="directoryPaths.imageDataJson == null" class="material-icons info" (click)="chooseImageDataJson(item.imageDataJson)">
+                    info
+                </span>
+            </li>
+        </ul>
+        <ul *ngIf="directoryPaths.files != null && directoryPaths.files.length > 0">
+            <li *ngFor="let item of directoryPaths.files">
+                <a (click)="chooseImage(item.filePath)">
+                    <span class="material-icons">
+                        image
+                    </span>
+                    {{item.fileName}}
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
