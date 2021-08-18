@@ -35,7 +35,7 @@
         </div>
 
         <div *ngIf="directoryPaths.imageDataJson != null" class="download">
-            <a (click)="downloadFolder()">
+            <a href="{{downloadPath + '' + directoryPaths.directoryPath}}">
                 <span class="material-icons">
                     download
                 </span>

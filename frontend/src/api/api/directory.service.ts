@@ -62,6 +62,55 @@ export class DirectoryService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
+    public apiDirectoriesDownloadGet(path: string, observe?: 'body', reportProgress?: boolean): Observable<Blob>;
+    public apiDirectoriesDownloadGet(path: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Blob>>;
+    public apiDirectoriesDownloadGet(path: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Blob>>;
+    public apiDirectoriesDownloadGet(path: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (path === null || path === undefined) {
+            throw new Error('Required parameter path was null or undefined when calling apiDirectoriesDownloadGet.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (path !== undefined && path !== null) {
+            queryParameters = queryParameters.set('path', <any>path);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Blob>('get',`${this.basePath}/api/directories/download`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param path 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
     public apiDirectoriesGet(path?: string, observe?: 'body', reportProgress?: boolean): Observable<DirectoryDTO>;
     public apiDirectoriesGet(path?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DirectoryDTO>>;
     public apiDirectoriesGet(path?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DirectoryDTO>>;

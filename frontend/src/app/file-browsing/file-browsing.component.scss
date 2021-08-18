@@ -41,6 +41,8 @@
             a{
                 display: flex;
                 cursor: pointer;
+                color: var(--light);
+                text-decoration: none;
             }
             .location{
                 color: var(--lightest);

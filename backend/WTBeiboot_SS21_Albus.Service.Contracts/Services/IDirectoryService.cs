@@ -10,5 +10,6 @@ namespace WTBeiboot_SS21_Albus.Service.Contracts.Services
     public interface IDirectoryService
     {
         Task<DirectoryDTO> GetDirectory(string path = null, string previousPath = null);
+        (string fileType, byte[] archiveData, string archiveName) DownloadDirectory(string path);
     }
 }

@@ -10,6 +10,7 @@ using WTBeiboot_SS21_Albus.Service.Contracts.Services;
 using WTBeiboot_SS21_Albus.Service.Contracts.DTO;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace WTBeiboot_SS21_Albus.Controllers
 {
@@ -40,6 +41,23 @@ namespace WTBeiboot_SS21_Albus.Controllers
             else
             {
                 return Ok(response.Result);
+            }
+        }
+
+        [ProducesResponseType(typeof(FileContentResult), 200)]
+        [ProducesResponseType(404)]
+        [HttpGet("download")]
+        public async Task<IActionResult> DownloadDirectory([Required]string path)
+        {
+            try
+            {
+                var (fileType, archiveData, archiveName) = _service.DownloadDirectory(path);
+
+                return File(archiveData, fileType, archiveName);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

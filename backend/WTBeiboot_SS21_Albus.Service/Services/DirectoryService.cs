@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using WTBeiboot_SS21_Albus.Service.Contracts.DTO;
 using Microsoft.Extensions.Configuration;
 using WTBeiboot_SS21_Albus.Logger;
+using System.IO.Compression;
 
 namespace WTBeiboot_SS21_Albus.Service.Services
 {
@@ -74,6 +75,50 @@ namespace WTBeiboot_SS21_Albus.Service.Services
                 response = _directoryDTO;
             }
             return response;
+        }
+
+        public (string fileType, byte[] archiveData, string archiveName) DownloadDirectory(string path)
+        {
+            var zipName = $"{path.Split(@"\").Last().Split(@"/").Last()}-{DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss")}.zip";
+
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                {
+                    GetSubDirectorys(path, archive);
+                    GetDirectoryFiles(path, archive);
+                }
+
+                return ("application/zip", memoryStream.ToArray(), zipName);
+            }
+        }
+
+        private void GetSubDirectorys(string path, ZipArchive archive)
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+
+            foreach (DirectoryInfo g in dir.GetDirectories())
+            {
+                GetDirectoryFiles(g.FullName, archive);
+            }
+        }
+        private void GetDirectoryFiles(string path, ZipArchive archive)
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+
+            var files = Directory.GetFiles(Path.Combine(_hostEnvironment.ContentRootPath, path)).ToList();
+
+            List<string> allowedExtensions = _configuration.GetSection("Settings:FilePattern")?.GetChildren()?.Select(x => x.Value)?.ToList();
+            allowedExtensions.Add(".json");
+
+            foreach (FileInfo file in dir.GetFiles().Where(file => allowedExtensions.Any(file.FullName.ToLower().EndsWith)))
+            {
+                var theFile = archive.CreateEntry(file.FullName);
+                using (var streamWriter = new StreamWriter(theFile.Open()))
+                {
+                    streamWriter.Write(File.ReadAllText(file.FullName));
+                }
+            }
         }
     }
 }

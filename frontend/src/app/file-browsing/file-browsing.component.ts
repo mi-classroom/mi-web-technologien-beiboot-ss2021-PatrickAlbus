@@ -1,5 +1,6 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Injectable, Inject } from '@angular/core';
 import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO } from "../../api/index";
+import { environment } from "../../environments/environment"
 
 interface Service {
   readonly directoryName: string;
@@ -22,18 +23,20 @@ export class FileBrowsingComponent{
   public filteredDirectoryPaths: DirectoryDTO[] = [];
   public directoryPaths: DirectoryDTO;
   public filter: string;
+  
+  private downloadPath: string;
 
   private location: string[] = [];
   private previousPath: string[] = [];
   
   constructor(private directoryService: DirectoryService) {
+    this.downloadPath = environment.API_BASE_PATH + "/api/directories/download?path=";
     this.getDirectoryAndFilePaths();
   }
   
   private getDirectoryAndFilePaths(_directoryDTO?: DirectoryDTO) {
     this.directoryService.apiDirectoriesGet()
       .subscribe(result => {
-        console.log(result);
         this.directoryPaths = result;
       });
   }
@@ -79,10 +82,6 @@ export class FileBrowsingComponent{
         this.location.pop();
         this.directoryPaths = result;
       })
-  }
-
-  public downloadFolder(){
-    console.log("DOWNLOAD");
   }
 
   public chooseImage(filePath: string){
