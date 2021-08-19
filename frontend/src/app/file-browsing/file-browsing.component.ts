@@ -42,6 +42,7 @@ export class FileBrowsingComponent{
   }
 
   public nextDirectory(_directoryPath: string, _directoryName: string){
+    this.filter = null;
     this.location.push(_directoryName);
     this.previousPath.push(this.directoryPaths.directoryPath);
     this.directoryService.apiDirectoriesGet(_directoryPath)
@@ -50,33 +51,8 @@ export class FileBrowsingComponent{
       })
   }
 
-  // public filterChange(){
-  //   this.filteredDirectoryPaths = this.directoryPaths;
-    
-  //   if(this.filter != null && this.filter != ""){
-  //       this.removefilteredData(this.filteredDirectoryPaths);
-  //   }
-  // }
-
-  // private removefilteredData(directories: DirectoryDTO[]){
-  //   for(var i = directories.length - 1; i>=0; i--){
-  //     if(directories[i].childDirectories != null) this.removefilteredData(directories[i].childDirectories);
-  //     if(directories[i].files != null){
-  //       for(var j = directories[i].files.length - 1; j>=0; j--){
-  //         if(directories[i].files[j].fileName.toLowerCase().includes(this.filter.toLowerCase()) == false) {
-  //           directories[i].files.splice(j, 1)
-  //         }
-  //       }
-  //     }
-  //     if((directories[i].childDirectories == null || directories[i].childDirectories.length == 0) && (directories[i].files == null || directories[i].files.length == 0)) directories.splice(i,1);
-  //   }
-  //   this.directoryService.apiDirectoriesGet()
-  //     .subscribe(result => {
-  //       this.directoryPaths = result;
-  //     });
-  // }
-
   public gotoPreviousPath(){
+    this.filter = null;
     this.directoryService.apiDirectoriesGet(this.previousPath.pop())
       .subscribe(result => {
         this.location.pop();
