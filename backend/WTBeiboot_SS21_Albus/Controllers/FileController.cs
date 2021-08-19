@@ -31,11 +31,11 @@ namespace WTBeiboot_SS21_Albus.Controllers
         public async Task<IActionResult> GetFile(string path)
         {
             _loggerManager.LogInfo(HttpUtility.UrlDecode(path));
-            Byte[] b = System.IO.File.ReadAllBytes(HttpUtility.UrlDecode(path));
+            byte[] b = System.IO.File.ReadAllBytes(HttpUtility.UrlDecode(path));
             return Ok(File(b, "image/jpeg"));
         }
 
-        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ExifDTO), 200)]
         [ProducesResponseType(404)]
         [HttpGet("exif/{path}")]
         public async Task<IActionResult> GetExifOfFile(string path)
@@ -53,7 +53,7 @@ namespace WTBeiboot_SS21_Albus.Controllers
             }
         }
 
-        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(bool), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
         [HttpPut("{path}")]

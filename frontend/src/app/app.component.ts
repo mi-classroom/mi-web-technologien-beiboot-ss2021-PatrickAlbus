@@ -8,7 +8,7 @@ import { StartupService, ConfigurationDTO } from "../api/index";
   providers: [StartupService]
 })
 export class AppComponent {
-  title = 'app';
+  title = 'cda_';
 
   public startupConfiguration: ConfigurationDTO[] = null;
 

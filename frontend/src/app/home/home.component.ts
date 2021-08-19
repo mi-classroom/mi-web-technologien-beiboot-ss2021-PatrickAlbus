@@ -12,7 +12,7 @@ import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO, Configur
 
 export class HomeComponent implements OnChanges {
   public img = null;
-  private exifData: ExifDTO = null;
+  public exifData: ExifDTO = null;
   public imgJson = null;
 
   @Input()

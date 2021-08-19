@@ -62,9 +62,9 @@ export class FileService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiFilesExifPathGet(path: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiFilesExifPathGet(path: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiFilesExifPathGet(path: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiFilesExifPathGet(path: string, observe?: 'body', reportProgress?: boolean): Observable<ExifDTO>;
+    public apiFilesExifPathGet(path: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ExifDTO>>;
+    public apiFilesExifPathGet(path: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ExifDTO>>;
     public apiFilesExifPathGet(path: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (path === null || path === undefined) {
@@ -75,6 +75,9 @@ export class FileService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -85,7 +88,7 @@ export class FileService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/api/files/exif/${encodeURIComponent(String(path))}`,
+        return this.httpClient.request<ExifDTO>('get',`${this.basePath}/api/files/exif/${encodeURIComponent(String(path))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -143,9 +146,9 @@ export class FileService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiFilesPathPut(path: string, body?: ExifDTO, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiFilesPathPut(path: string, body?: ExifDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiFilesPathPut(path: string, body?: ExifDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiFilesPathPut(path: string, body?: ExifDTO, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public apiFilesPathPut(path: string, body?: ExifDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public apiFilesPathPut(path: string, body?: ExifDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
     public apiFilesPathPut(path: string, body?: ExifDTO, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (path === null || path === undefined) {
@@ -157,6 +160,9 @@ export class FileService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -174,7 +180,7 @@ export class FileService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('put',`${this.basePath}/api/files/${encodeURIComponent(String(path))}`,
+        return this.httpClient.request<boolean>('put',`${this.basePath}/api/files/${encodeURIComponent(String(path))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
