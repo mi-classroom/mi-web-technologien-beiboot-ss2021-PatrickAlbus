@@ -45,6 +45,7 @@ namespace WTBeiboot_SS21_Albus.Service.Services
                     Name = _configuration.GetSection("Name")?.Value,
                     Type = _configuration.GetSection("Type")?.Value,
                     MaxLenght = _configuration.GetSection("MaxLenght")?.Value,
+                    IsEditable = (_configuration.GetSection("IsEditable")?.Value.ToLower() == "true") ? true : false,
                     Languages = GetConfigValuesLanguages(_configuration.GetSection("Languages")?.GetChildren())
                 });
             }

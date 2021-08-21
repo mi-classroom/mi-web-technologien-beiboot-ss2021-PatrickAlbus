@@ -15,5 +15,6 @@ export interface ConfigurationValuesDTO {
     name?: string;
     type?: string;
     maxLenght?: string;
+    isEditable?: boolean;
     languages?: Array<ConfigurationValueLanguagesDTO>;
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ExifDTO, ConfigurationDTO } from "../../../api/index";
+import { FileService, ExifDTO, ConfigurationDTO } from "../../../api/index";
 
 interface ExifConfiguration {
     Language: string;
@@ -12,6 +12,12 @@ interface ExifConfigurationValues {
     Label: string;
     Type: string;
     MaxLenght: string;
+    Value: string;
+    IsEditable: boolean;
+}
+
+interface ExifJsonObject {
+    Language: string;
     Value: string;
 }
 
@@ -32,7 +38,10 @@ export class ExifFooterComponent implements OnChanges{
     @Input()
     exifData: ExifDTO = null;
 
-    constructor() {
+    @Input()
+    filePath: string = null;
+
+    constructor(private fileService: FileService) {
     }
 
     ngOnChanges(changes: SimpleChanges){
@@ -62,7 +71,8 @@ export class ExifFooterComponent implements OnChanges{
                                         Label: language.label,
                                         Type: value.type,
                                         MaxLenght: value.maxLenght,
-                                        Value: this.getConfigurationValue(language.label, value.name)
+                                        Value: this.getConfigurationValue(language.label, value.name),
+                                        IsEditable: value.isEditable
                                     });
                                 } 
                             });
@@ -74,7 +84,8 @@ export class ExifFooterComponent implements OnChanges{
                                         Label: language.label,
                                         Type: value.type,
                                         MaxLenght: value.maxLenght,
-                                        Value: this.getConfigurationValue(language.label, value.name)
+                                        Value: this.getConfigurationValue(language.label, value.name),
+                                        IsEditable: value.isEditable
                                     }],
                                     Language: language.shortcut
                                 });
@@ -83,7 +94,6 @@ export class ExifFooterComponent implements OnChanges{
                     });
                 }
             });
-            console.log(this._exifConfiguration);
         }
     }
 
@@ -122,6 +132,45 @@ export class ExifFooterComponent implements OnChanges{
         }else{
             container.style.height = "50vh";
             exifDataContainer.style.display = "block";
+        }
+    }
+
+    private saveExif(){
+        if(this._exifConfiguration.length > 0){
+            let setExif: ExifDTO = {
+                size: this._exifData.size,
+                exifData: []
+            };
+
+            this._exifConfiguration[0].Values.forEach(item => {
+                let exifJson: ExifJsonObject[] = [];
+                exifJson.push({
+                    Language: this._exifConfiguration[0].Language,
+                    Value: item.Value
+                });
+
+                for(let i = 1;i<this._exifConfiguration.length;i++){
+                    this._exifConfiguration[i].Values.forEach(innerItem => {
+                        if(innerItem.Name == item.Name){
+                            exifJson.push({
+                                Language: this._exifConfiguration[i].Language,
+                                Value: innerItem.Value
+                            });
+                        }
+                    })
+                }
+
+                setExif.exifData.push({
+                    exifName: item.Name,
+                    exifIsEditable: item.IsEditable,
+                    exifDescription: JSON.stringify(exifJson)
+                });
+            });
+            
+            this.fileService.apiFilesPathPut(this.filePath, setExif)
+                .subscribe(response => {
+                    console.log(response);
+                })
         }
     }
 }

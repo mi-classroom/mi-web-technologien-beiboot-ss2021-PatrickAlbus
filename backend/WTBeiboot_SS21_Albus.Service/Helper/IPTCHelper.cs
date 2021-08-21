@@ -49,9 +49,10 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
         {
             if (File.Exists(path))
             {
-                using (var image = Image.Load(path))
+                using (var image = await Image.LoadAsync(path))
                 {
                     var iptcProfile = image.Metadata.IptcProfile;
+                    List<IPTCTmp> iptcTmp = new List<IPTCTmp>();
                     if (iptcProfile != null)
                     {
                         foreach (ExifDataDTO rawData in exifData)
@@ -60,24 +61,38 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
                             {
                                 if (rawData.ExifIsEditable == true && rawData.ExifName == iptcData.Tag.ToString())
                                 {
-                                    iptcProfile.SetValue(iptcData.Tag, rawData.ExifDescription);
+                                    iptcTmp.Add(new IPTCTmp
+                                    {
+                                        Tag = iptcData.Tag,
+                                        Value = rawData.ExifDescription
+                                    });
                                 }
                             }
                         }
+                        foreach (IPTCTmp data in iptcTmp)
+                        {
+                            iptcProfile.SetValue(data.Tag, data.Value);
+                        }
                         iptcProfile.UpdateData();
                         image.Save(path);
+                        image.Dispose();
                     }
                     else
                     {
                         return false;
                     }
-                    
                 }
                 return true;
             }
 
             return false;
         }
+    }
+
+    public class IPTCTmp
+    {
+        public SixLabors.ImageSharp.Metadata.Profiles.Iptc.IptcTag Tag { get; set; }
+        public string Value { get; set; }
     }
 
 }

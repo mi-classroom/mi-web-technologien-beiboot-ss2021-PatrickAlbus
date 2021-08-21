@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DirectoryService, DirectoryDTO, FileService, FileDTO, ExifDTO, ConfigurationDTO } from "../../api/index";
+import { FileService, ExifDTO, ConfigurationDTO } from "../../api/index";
 
 
 @Component({
@@ -46,12 +46,6 @@ export class HomeComponent implements OnChanges {
       }
     }
   }
-
-  // private saveMetadata(){
-  //   this.fileService.apiFilesPathPut(this.filePath, this.exifData)
-  //     .subscribe(result => {
-  //     });
-  // }
 
   private showJson() {
     this.exifData = null;
