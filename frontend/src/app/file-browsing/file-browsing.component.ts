@@ -37,7 +37,6 @@ export class FileBrowsingComponent{
   private getDirectoryAndFilePaths(_directoryDTO?: DirectoryDTO) {
     this.directoryService.apiDirectoriesGet()
       .subscribe(result => {
-        console.log(result);
         this.directoryPaths = result;
       });
   }
@@ -48,7 +47,6 @@ export class FileBrowsingComponent{
     this.previousPath.push(this.directoryPaths.directoryPath);
     this.directoryService.apiDirectoriesGet(_directoryPath)
       .subscribe(result => {
-        console.log(result);
         this.directoryPaths = result;
       })
   }

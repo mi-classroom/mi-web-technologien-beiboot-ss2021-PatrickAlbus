@@ -179,7 +179,6 @@ export class ExifFooterComponent implements OnChanges{
             
             this.fileService.apiFilesPathPut(this.filePath, setExif)
                 .subscribe(response => {
-                    console.log(response);
                 })
         }
     }
