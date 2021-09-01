@@ -119,7 +119,7 @@ export class ExifFooterComponent implements OnChanges{
             let color = "--accent";
             var element = document.querySelector('#'+id) as HTMLElement;
 
-            if(percent >= 80) color = "--error";
+            if(percent >= 95) color = "--error";
 
             element.style.backgroundImage = "linear-gradient(to left, var(--lighten-strong) "+ (Number(100) - percent) +"%,var("+color+") 0%)";
         }
