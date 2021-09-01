@@ -67,7 +67,7 @@
                         </span>
                         {{item.directoryName}}
                     </a>
-                    <span *ngIf="directoryPaths.imageDataJson == null" class="material-icons info" (click)="chooseImageDataJson(item.imageDataJson)">
+                    <span *ngIf="item.imageDataJson != null" class="material-icons info" (click)="chooseImageDataJson(item.imageDataJson)">
                         info
                     </span>
                 </li>
