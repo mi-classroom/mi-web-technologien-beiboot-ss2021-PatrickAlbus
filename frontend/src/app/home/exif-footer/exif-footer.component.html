@@ -16,11 +16,11 @@
                     <ng-container *ngFor="let item of language.Values">
                         <div class="row">
                             <ng-container *ngIf="item.Type == 'Text'">
-                                <input type="text" class="form-control" id="{{language.Language + '' + item.Name}}" (keyup)="textChange(language.Language + '' + item.Name, item.MaxLenght, item.Value)" [(ngModel)]="item.Value" maxlength="{{item.MaxLenght}}">
+                                <input type="text" class="form-control" id="{{language.Language + '' + item.Name}}" (keyup)="textChange(language.Language + '' + item.Name, item.MaxLength, item.Value)" [(ngModel)]="item.Value" maxlength="{{item.MaxLength}}">
                                 <label for="{{language.Language + '' + item.Name}}">{{item.Label}}</label>
                             </ng-container>
                             <ng-container *ngIf="item.Type == 'Textarea'">
-                                <textarea class="form-control" id="{{language.Language + '' + item.Name}}" rows="5" (keyup)="textChange(language.Language + '' + item.Name, item.MaxLenght, item.Value)" [(ngModel)]="item.Value" maxlength="{{item.MaxLenght}}"></textarea>
+                                <textarea class="form-control" id="{{language.Language + '' + item.Name}}" rows="5" (keyup)="textChange(language.Language + '' + item.Name, item.MaxLength, item.Value)" [(ngModel)]="item.Value" maxlength="{{item.MaxLength}}"></textarea>
                                 <label for="{{language.Language + '' + item.Name}}">{{item.Label}}</label>
                             </ng-container>
                         </div>

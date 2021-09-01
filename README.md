@@ -4,159 +4,29 @@ Zum Modul Web Technologien gibt es ein begleitendes Projekt. Im Rahmen dieses Pr
 
 Als organisatorischen Rahmen für das Projekt nutzen wir GitHub Classroom. Inhaltlich befassen wir uns mit der Entwicklung einer kleinen Web-Anwendung für die Bearbeitung von Bildern. Hierbei steht weniger ein professioneller Konzeptions-, Entwurfs- und Entwicklungsprozess im Vordergrund, sondern vielmehr die sukzessive Weiterentwicklung einer Anwendung, das Ausprobieren, Vergleichen, Refactoren und die Freude an lauffähigem Code.
 
-## Einstellungen
+## Dokumentation
+### Allgemein
+[Entwicklungsumgebung](docs/entwicklungsumgebung.md)
 
-### Bilddaten
-Die Bilddaten werden aus Urheberrechtsgründen nicht mit in das Repository geladen. Deswegen müssen diese vor dem Starten des Projektes in den Ordner `data` hinzugefügt werden.
+[Review Workflow](docs/review-workflow.md)
 
-### Backend Konfiguration
-In dem Ordner `backend\WTBeiboot_SS21_Albus` befindet sich die Datei `appsettings.json`. In dieser Datei befinden sich die Projekteinstellungen. 
-```
-"Settings": {
-    "TargetDirectory": "../mnt",
-    "FilePattern": [
-      ".jpeg",
-      ".jpg"
-    ],
-    "Configuration": [
-      {
-        //Only IPTC Data can be change
-        "Title": "Exif",
-        "Values": [
-          {
-            "Name": "ImageDescription",
-            "IsEditable": false
-          },
-          {
-            "Name": "Artist",
-            "IsEditable": false
-          },
-          {
-            "Name": "Copyright",
-            "IsEditable": false
-          }
-        ]
-      },
-      {
-        "Title": "IPTC",
-        "Values": [
-          {
-            "Name": "Headline",
-            "IsEditable": true
-          }
-        ]
-      }
-    ],
-    "ImageJson": "imageData-1.1.json"
-  }
-```
-Hier wird sowohl der Pfad angegeben, unter dem die Bilder sich anschließend befinden, die Dateistruktur, welche ausgelesen werden soll und die Einstellung, welche Exifdaten abgebildet werden sollen.
+[Timetracker](docs/timetracker.md)
 
-### Frontend Konfiguration
-Im Frontend befinden sich die Einstellungen, um auf das Backend zugreifen zu können. Diese Konfigurationsdateien befinden sich unter `frontend\src\environments`. Die Datei `environment.ts` hat die Einstellungen für den Entwicklungsprozess, wohingegen die Einstellungen für den Produktivmodus in der Datei `environment.prod.ts` vorhanden sind.
-```
-export const environment = {
-  production: true,
-  API_BASE_PATH: 'http://localhost:8080',
-};
-```
+### Backend
+[Entwicklungsumgebung](docs/backend/entwicklungsumgebung-backend.md)
 
+[Naming Convention](docs/backend/naming-convention.md)
 
-## Ausführen des Projektes
-Bitte beachtet, dass zum Ausführen des Projekts `Docker` installiert sein muss.
+[Fehlerhandling und Logging](docs/backend/fehlerhandling-und-logging.md)
 
-### Komplettes Projekt Starten (Frontend und Backend)
-Das Project wird per Docker (docker-compose) im Hauptverzeichnis ausgeliefert.
+[App-Settings](docs/backend/app-settings.md)
 
-Mit dem Befehl 
+### Frontend
+[App-Settings](docs/frontend/app-settings.md)
 
-```
-docker-compose up -d
-```
-
-wird der Dienst gestartet. Existiert das `image` nicht auf dem Rechner, wird es herruntergeladen und automatisch beim ersten Lauf gebaut. Sollten danach Änderungen an der Dockerfile für das Frontend vorgenommen werden, muss dieses per
-
-```
-docker-compose up --build -d
-```
-
-neu gebaut werden. Die Option `-d` lässt bei Erfolg den Container im Hintergrund laufen. Ein erfolgreicher Start kann einmal per 
-
-```
-docker-compose ps
-```
-
-überprüft bzw. der Aufruf im Browser über die URL [localhost:80](http://localhost:80/) (für das Frontend) und [localhost:8080](http://localhost:8080/) (für das Backend) überprüft werden.
-
-Mit 
-
-```
-docker-compose down
-```
-
-lässt sich der Dienst runterfahren.
-
-### Frontend starten
-
-Das Frontend wird per Docker (docker-compose) im Hauptverzeichnis ausgeliefert.
-
-Mit dem Befehl 
-
-```
-docker-compose up -d frontend
-```
-
-wird der Dienst `frontend` gestartet. Existiert das `image` nicht auf dem Rechner, wird es herruntergeladen und automatisch beim ersten Lauf gebaut. Sollten danach Änderungen an der Dockerfile für das Frontend vorgenommen werden, muss dieses per
-
-```
-docker-compose up --build -d frontend
-```
-
-neu gebaut werden. Die Option `-d` lässt bei Erfolg den Container im Hintergrund laufen. Ein erfolgreicher Start kann einmal per 
-
-```
-docker-compose ps
-```
-
-überprüft bzw. der Aufruf im Browser über die URL [localhost:80](http://localhost:80/) überprüft werden.
-
-Mit 
-
-```
-docker-compose down
-```
-
-lässt sich der Dienst runterfahren.
-
-### Backend Starten
-Das Backend wird per Docker (docker-compose) im Hauptverzeichnis ausgeliefert.
-Mit dem Befehl 
-```
-docker-compose up -d backend
-```
-wird der Dienst `backend` gestartet. Existiert das `image` nicht auf dem Rechner, wird es heruntergeladen und automatisch beim ersten Lauf gebaut. Sollten danach Änderungen an dem Dockerfile für das Backend vorgenommen werden, muss dieser per
-```
-docker-compose up --build -d backend
-```
-neu gebaut werden. Die Option `-d` lässt bei Erfolg den Container im Hintergrund laufen. Ein erfolgreicher Start kann einmal per
-```
-docker-compose ps
-```
-überprüft bzw. der Aufruf im Browser über die URL [localhost:8080](http://localhost:8080/) überprüft werden.
-
-Mit 
-```
-docker-compose down
-```
-lässt sich der Dienst herunterfahren.
-
-## APIs
-Die API-Dokumentation ist unter [http://localhost:8080/swagger](http://localhost:8080/swagger) zu finden.
-Dort können diese ebenfalls getestet werden und die URL der entsprechenden Abfrage werden ebenfalls angezeigt.
-
-## Timetracker
-* Issue 1: 7 Stunden
-* Issue 2: 2 Stunden
-* Issue 3: 5 Stunden
-* Issue 4: 3 Stunden
-* Issue 5: 8 Stunden
+### Architecture Descision Records (ADR)
+* [0001 - Angular als Frontend Framework](docs/decisions/0001-client-side-language.md)
+* [0002 - ASP.NET als Backend Framework](docs/decisions/0002-server-side-language.md)
+* [0003 - Docker Compose als Container Tool](docs/decisions/0003-docker-compose.md)
+* [0004 - SixLabors als EXIF Bibliothek](docs/decisions/0004-exif-library.md)
+* [0005 - OpenAPI und Swagger zur API Dokumentation](docs/decisions/0005-openapi-swagger.md)

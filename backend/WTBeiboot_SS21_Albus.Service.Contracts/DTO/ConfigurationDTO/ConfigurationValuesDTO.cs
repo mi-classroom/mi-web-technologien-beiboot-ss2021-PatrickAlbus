@@ -10,7 +10,7 @@ namespace WTBeiboot_SS21_Albus.Service.Contracts.DTO.ConfigurationDTO
     {
         public string Name { get; set; }
         public string Type { get; set; }
-        public string MaxLenght { get; set; }
+        public string MaxLength { get; set; }
         public bool IsEditable { get; set; }
         public IEnumerable<ConfigurationValueLanguagesDTO> Languages { get; set; } 
     }

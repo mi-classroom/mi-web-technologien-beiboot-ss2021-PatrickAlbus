@@ -11,7 +11,7 @@ interface ExifConfigurationValues {
     Name: string;
     Label: string;
     Type: string;
-    MaxLenght: string;
+    MaxLength: string;
     Value: string;
     IsEditable: boolean;
 }
@@ -70,7 +70,7 @@ export class ExifFooterComponent implements OnChanges{
                                         Name: value.name,
                                         Label: language.label,
                                         Type: value.type,
-                                        MaxLenght: value.maxLenght,
+                                        MaxLength: value.maxLength,
                                         Value: this.getConfigurationValue(language.label, value.name),
                                         IsEditable: value.isEditable
                                     });
@@ -83,7 +83,7 @@ export class ExifFooterComponent implements OnChanges{
                                         Name: value.name,
                                         Label: language.label,
                                         Type: value.type,
-                                        MaxLenght: value.maxLenght,
+                                        MaxLength: value.maxLength,
                                         Value: this.getConfigurationValue(language.label, value.name),
                                         IsEditable: value.isEditable
                                     }],
@@ -113,9 +113,9 @@ export class ExifFooterComponent implements OnChanges{
         return response;
     }
 
-    public textChange(id: string, maxLenght: string, text: string){
+    public textChange(id: string, maxLength: string, text: string){
         try{
-            let percent = Math.round((100*text.length)/Number(maxLenght));
+            let percent = Math.round((100*text.length)/Number(maxLength));
             let color = "--accent";
             var element = document.querySelector('#'+id) as HTMLElement;
 
@@ -129,7 +129,7 @@ export class ExifFooterComponent implements OnChanges{
     public showExif(){
         this._exifConfiguration.forEach(parent => {
             parent.Values.forEach(child => {
-                this.textChange(parent.Language + '' + child.Name, child.MaxLenght, child.Value);
+                this.textChange(parent.Language + '' + child.Name, child.MaxLength, child.Value);
             });
         });
         

@@ -14,7 +14,7 @@ import { ConfigurationValueLanguagesDTO } from './configurationValueLanguagesDTO
 export interface ConfigurationValuesDTO { 
     name?: string;
     type?: string;
-    maxLenght?: string;
+    maxLength?: string;
     isEditable?: boolean;
     languages?: Array<ConfigurationValueLanguagesDTO>;
 }
