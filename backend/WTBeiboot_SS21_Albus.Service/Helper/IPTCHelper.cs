@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Metadata.Profiles.Exif;
+using SixLabors.ImageSharp.Metadata.Profiles;
+using SixLabors.ImageSharp.Metadata.Profiles.Iptc;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -25,18 +26,17 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
                 {
                     foreach (var _section in section)
                     {
-                        foreach (var data in iptcProfile.Values)
+                        Enum.TryParse(_section.GetValue<string>("Name"), out IptcTag iptcTag);
+                        try
                         {
-                            if (_section.GetValue<string>("Name") == data.Tag.ToString())
+                            currentValues.Add(new ExifDataDTO
                             {
-                                currentValues.Add(new ExifDataDTO
-                                {
-                                    ExifName = _section.GetValue<string>("Name"),
-                                    ExifDescription = data.Value,
-                                    ExifIsEditable = _section.GetValue<bool>("IsEditable")
-                                });
-                            }
+                                ExifName = _section.GetValue<string>("Name"),
+                                ExifDescription = iptcProfile.GetValues(iptcTag).FirstOrDefault().ToString(),
+                                ExifIsEditable = _section.GetValue<bool>("IsEditable")
+                            });
                         }
+                        catch { }
                     }
                 }
            
@@ -55,23 +55,11 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
                     List<IPTCTmp> iptcTmp = new List<IPTCTmp>();
                     if (iptcProfile != null)
                     {
-                        foreach (ExifDataDTO rawData in exifData)
+                        foreach (ExifDataDTO data in exifData)
                         {
-                            foreach (var iptcData in iptcProfile.Values)
-                            {
-                                if (rawData.ExifIsEditable == true && rawData.ExifName == iptcData.Tag.ToString())
-                                {
-                                    iptcTmp.Add(new IPTCTmp
-                                    {
-                                        Tag = iptcData.Tag,
-                                        Value = rawData.ExifDescription
-                                    });
-                                }
-                            }
-                        }
-                        foreach (IPTCTmp data in iptcTmp)
-                        {
-                            iptcProfile.SetValue(data.Tag, data.Value);
+                            Enum.TryParse(data.ExifName, out IptcTag iptcTag);
+                            iptcProfile.RemoveValue(iptcTag);
+                            iptcProfile.SetValue(iptcTag, data.ExifDescription);
                         }
                         iptcProfile.UpdateData();
                         image.Save(path);

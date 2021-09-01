@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FileService, ExifDTO, ConfigurationDTO } from "../../../api/index";
 
@@ -103,6 +103,7 @@ export class ExifFooterComponent implements OnChanges{
             if(data.exifName == name){
                 try{
                     console.log(JSON.parse(data.exifDescription));
+                    response = data.exifDescription;
                 }
                 catch(e){
                     response = data.exifDescription;
@@ -113,16 +114,25 @@ export class ExifFooterComponent implements OnChanges{
     }
 
     public textChange(id: string, maxLenght: string, text: string){
-        let percent = Math.round((100*text.length)/Number(maxLenght));
-        let color = "--accent";
-        var element = document.querySelector('#'+id) as HTMLElement;
+        try{
+            let percent = Math.round((100*text.length)/Number(maxLenght));
+            let color = "--accent";
+            var element = document.querySelector('#'+id) as HTMLElement;
 
-        if(percent >= 80) color = "--error";
+            if(percent >= 80) color = "--error";
 
-        element.style.backgroundImage = "linear-gradient(to left, var(--lighten-strong) "+ (Number(100) - percent) +"%,var("+color+") 0%)";
+            element.style.backgroundImage = "linear-gradient(to left, var(--lighten-strong) "+ (Number(100) - percent) +"%,var("+color+") 0%)";
+        }
+        catch{}
     }
 
     public showExif(){
+        this._exifConfiguration.forEach(parent => {
+            parent.Values.forEach(child => {
+                this.textChange(parent.Language + '' + child.Name, child.MaxLenght, child.Value);
+            });
+        });
+        
         let container = document.querySelector('.exifContainer') as HTMLElement;
         let exifDataContainer = document.querySelector('.exifDataContainer') as HTMLElement;
 
@@ -135,7 +145,7 @@ export class ExifFooterComponent implements OnChanges{
         }
     }
 
-    private saveExif(){
+    public saveExif(){
         if(this._exifConfiguration.length > 0){
             let setExif: ExifDTO = {
                 size: this._exifData.size,

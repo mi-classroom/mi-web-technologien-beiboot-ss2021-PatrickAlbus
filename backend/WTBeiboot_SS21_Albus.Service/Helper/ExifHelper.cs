@@ -32,7 +32,6 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
                                 {
                                     ExifName = _section.GetValue<string>("Name"),
                                     ExifDescription = data.GetValue().ToString(),
-                                    //ExifIsEditable = _section.GetValue<bool>("IsEditable")
                                     ExifIsEditable = false
                                 });
                             }
