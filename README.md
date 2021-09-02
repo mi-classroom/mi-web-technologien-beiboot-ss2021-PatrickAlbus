@@ -30,3 +30,6 @@ Als organisatorischen Rahmen für das Projekt nutzen wir GitHub Classroom. Inhal
 * [0003 - Docker Compose als Container Tool](docs/decisions/0003-docker-compose.md)
 * [0004 - SixLabors als EXIF Bibliothek](docs/decisions/0004-exif-library.md)
 * [0005 - OpenAPI und Swagger zur API Dokumentation](docs/decisions/0005-openapi-swagger.md)
+
+### Probleme
+[Speichern von mehreren Sprachen in den Metadaten](docs/problems/multilingual.md)

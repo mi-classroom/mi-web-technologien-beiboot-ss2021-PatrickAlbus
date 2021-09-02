@@ -10,5 +10,6 @@ namespace WTBeiboot_SS21_Albus.Service.Contracts.DTO.ConfigurationDTO
     {
         public string Shortcut { get; set; }
         public string Label { get; set; }
+        public bool IsMainLanguage { get; set; }
     }
 }

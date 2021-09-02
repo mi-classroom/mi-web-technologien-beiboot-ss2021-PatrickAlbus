@@ -29,11 +29,13 @@ In dieser Datei befinden sich mehrere Abschnitte. Für die relevanten Einstellun
             "Languages": [
               {
                 "Shortcut": "de",
-                "Label": "Titel"
+                "Label": "Titel",
+                "IsMainLanguage": true
               },
               {
                 "Shortcut": "en",
-                "Label": "Title"
+                "Label": "Title",
+                "IsMainLanguage": false
               }
             ]
           },
@@ -45,11 +47,13 @@ In dieser Datei befinden sich mehrere Abschnitte. Für die relevanten Einstellun
             "Languages": [
               {
                 "Shortcut": "de",
-                "Label": "Dateiart / Beschreibung"
+                "Label": "Dateiart / Beschreibung",
+                "IsMainLanguage": true
               },
               {
                 "Shortcut": "en",
-                "Label": "Type / Description"
+                "Label": "Type / Description",
+                "IsMainLanguage": false
               }
             ]
           },
@@ -61,11 +65,13 @@ In dieser Datei befinden sich mehrere Abschnitte. Für die relevanten Einstellun
             "Languages": [
               {
                 "Shortcut": "de",
-                "Label": "Autor / Rechte"
+                "Label": "Autor / Rechte",
+                "IsMainLanguage": true
               },
               {
                 "Shortcut": "en",
-                "Label": "Author / Copyright"
+                "Label": "Author / Copyright",
+                "IsMainLanguage": false
               }
             ]
           },
@@ -77,11 +83,13 @@ In dieser Datei befinden sich mehrere Abschnitte. Für die relevanten Einstellun
             "Languages": [
               {
                 "Shortcut": "de",
-                "Label": "Quelle"
+                "Label": "Quelle",
+                "IsMainLanguage": true
               },
               {
                 "Shortcut": "en",
-                "Label": "Source"
+                "Label": "Source",
+                "IsMainLanguage": false
               }
             ]
           }
@@ -103,6 +111,7 @@ Sollten doch Metadaten ausgelesen werden, muss ein Objekt angelegt werden. Diese
     * Das letzte Element in der Configuration ist die Variable `Languages`. Hier befinden sich wieder Objekte drunter, welche für die verschiedenen auszugebenden Sprachen auf der Webseite verwendet werden. 
         * Die Variable `Shortcut` gibt hierbei den Ländercode an.
         * Die Variable `Label` gibt an, welche Beschriftung das Feld auf der Webseite erhalten soll.
+        * Die Variable `IsMainLanguage` gibt an, ob es sich dabei um die bevorzugte Sprache handelt. Sollten bei den Exifdaten die Werte identisch sein in allen Sprachen, übernimmt das Programm automatisch alle Änderungen von der Mainsprache. Wenn es zu Unterscheidungen innerhalb der Angaben kommt, wird jede Sprache einzeln betrachtet.
 * Die Variable `ImageJson` nennt den Namen, welcher zu dem Dokument in den einzelnen Ordner gehört, welches die allgemeinen Informationen zu einem Artefakt enthält.
 
 ## Hinzufügen der Bilder

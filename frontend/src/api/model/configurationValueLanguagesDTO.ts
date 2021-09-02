@@ -13,4 +13,5 @@
 export interface ConfigurationValueLanguagesDTO { 
     shortcut?: string;
     label?: string;
+    isMainLanguage?: boolean;
 }

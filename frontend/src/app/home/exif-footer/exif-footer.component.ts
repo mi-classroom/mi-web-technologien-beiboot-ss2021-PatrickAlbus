@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { EventEmitter } from 'protractor';
 import { FileService, ExifDTO, ConfigurationDTO } from "../../../api/index";
 
 interface ExifConfiguration {
     Language: string;
+    IsMainLanguage: boolean;
     Values: ExifConfigurationValues[];
 }
 
@@ -87,7 +88,8 @@ export class ExifFooterComponent implements OnChanges{
                                         Value: this.getConfigurationValue(language.label, value.name),
                                         IsEditable: value.isEditable
                                     }],
-                                    Language: language.shortcut
+                                    Language: language.shortcut,
+                                    IsMainLanguage: language.isMainLanguage
                                 });
                             }
                         });
@@ -101,13 +103,8 @@ export class ExifFooterComponent implements OnChanges{
         let response = null;
         this._exifData.exifData.forEach(data => {
             if(data.exifName == name){
-                try{
-                    console.log(JSON.parse(data.exifDescription));
-                    response = data.exifDescription;
-                }
-                catch(e){
-                    response = data.exifDescription;
-                }
+                //Muss angepasst werden, wenn eine Lösoung für Multilanguage gefunden wird.
+                response = data.exifDescription;
             }
         });
         return response;
@@ -122,6 +119,31 @@ export class ExifFooterComponent implements OnChanges{
             if(percent >= 95) color = "--error";
 
             element.style.backgroundImage = "linear-gradient(to left, var(--lighten-strong) "+ (Number(100) - percent) +"%,var("+color+") 0%)";
+        }
+        catch{}
+    }
+
+    public mainTextChange(id: string, maxLength: string, newText: string, oldText: string){
+        try{
+            this.textChange(id, maxLength, newText);
+            this._exifConfiguration.forEach(language => {
+                if(id.startsWith(language.Language)){
+                    language.Values.forEach(value => {
+                        if(id.endsWith(value.Name)){
+                            value.Value = newText;
+                        } 
+                    });
+                }else{
+                    language.Values.forEach(value => {
+                        if(id.endsWith(value.Name)){
+                            if(oldText == value.Value){
+                                value.Value = newText;
+                                this.textChange(language.Language + '' + value.Name, value.MaxLength, value.Value);
+                            } 
+                        } 
+                    });
+                } 
+            });
         }
         catch{}
     }
@@ -153,32 +175,17 @@ export class ExifFooterComponent implements OnChanges{
             };
 
             this._exifConfiguration[0].Values.forEach(item => {
-                let exifJson: ExifJsonObject[] = [];
-                exifJson.push({
-                    Language: this._exifConfiguration[0].Language,
-                    Value: item.Value
-                });
-
-                for(let i = 1;i<this._exifConfiguration.length;i++){
-                    this._exifConfiguration[i].Values.forEach(innerItem => {
-                        if(innerItem.Name == item.Name){
-                            exifJson.push({
-                                Language: this._exifConfiguration[i].Language,
-                                Value: innerItem.Value
-                            });
-                        }
-                    })
-                }
-
+                //Muss angepasst werden, wenn eine Lösoung für Multilanguage gefunden wird.
                 setExif.exifData.push({
                     exifName: item.Name,
                     exifIsEditable: item.IsEditable,
-                    exifDescription: JSON.stringify(exifJson)
+                    exifDescription: item.Value
                 });
             });
             
             this.fileService.apiFilesPathPut(this.filePath, setExif)
-                .subscribe(response => {
+                .subscribe(() => {
+                    this.showExif();
                 })
         }
     }

@@ -62,7 +62,8 @@ namespace WTBeiboot_SS21_Albus.Service.Services
                 response.Add(new ConfigurationValueLanguagesDTO
                 {
                     Shortcut = _configuration.GetSection("Shortcut")?.Value,
-                    Label = _configuration.GetSection("Label")?.Value
+                    Label = _configuration.GetSection("Label")?.Value,
+                    IsMainLanguage = (_configuration.GetSection("IsMainLanguage")?.Value.ToLower() == "true") ? true : false
                 });
             }
 
