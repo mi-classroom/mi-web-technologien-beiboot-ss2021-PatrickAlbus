@@ -4,23 +4,23 @@
     </header>
 
     <div class="row filter">
-        <input type="text" class="form-control" id="searchBox" placeholder="Suche" [(ngModel)]="filter">
+        <input type="text" class="form-control" id="searchBox" placeholder="Suche" [(ngModel)]="filter" (ngModelChange)="changeFilter()">
     </div>
     
     <section *ngIf="directoryPaths != null">
         <div class="found">
-            <ng-container *ngIf="directoryPaths.childDirectories != null">
+            <ng-container *ngIf="directoryLength != 0">
                 <span class="material-icons">
                     folder_open
                 </span>
-                {{directoryPaths.childDirectories.length}} Verzeichnisse gefunden
+                {{directoryLength}} Verzeichnisse gefunden
             </ng-container>
             
-            <ng-container *ngIf="directoryPaths.files != null">
+            <ng-container *ngIf="fileLength != 0">
                 <span class="material-icons">
                     image
                 </span>
-                {{directoryPaths.files.length}} Bilder gefunden
+                {{fileLength}} Bilder gefunden
             </ng-container>
         </div>
 

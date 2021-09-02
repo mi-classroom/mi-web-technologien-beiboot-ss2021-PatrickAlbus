@@ -24,7 +24,10 @@ export class FileBrowsingComponent{
   public directoryPaths: DirectoryDTO;
   public filter: string;
   
-  private downloadPath: string;
+  public directoryLength: number = 0;
+  public fileLength: number = 0;
+
+  public downloadPath: string;
 
   private location: string[] = [];
   private previousPath: string[] = [];
@@ -38,6 +41,7 @@ export class FileBrowsingComponent{
     this.directoryService.apiDirectoriesGet()
       .subscribe(result => {
         this.directoryPaths = result;
+        this.setDirectoryFileCount();
       });
   }
 
@@ -48,6 +52,7 @@ export class FileBrowsingComponent{
     this.directoryService.apiDirectoriesGet(_directoryPath)
       .subscribe(result => {
         this.directoryPaths = result;
+        this.setDirectoryFileCount();
       })
   }
 
@@ -57,7 +62,29 @@ export class FileBrowsingComponent{
       .subscribe(result => {
         this.location.pop();
         this.directoryPaths = result;
+        this.setDirectoryFileCount();
       })
+  }
+
+  public setDirectoryFileCount(){
+    this.directoryLength = (this.directoryPaths.childDirectories != null) ? this.directoryPaths.childDirectories.length : 0;
+    this.fileLength = (this.directoryPaths.files != null) ? this.directoryPaths.files.length : 0;
+  }
+
+  public changeFilter(){
+    this.directoryLength = 0;
+    if(this.directoryPaths.childDirectories != null){
+      this.directoryPaths.childDirectories.forEach(element => {
+        if(element.directoryName.toLowerCase().includes(this.filter.toLowerCase())) this.directoryLength++;
+      });
+    }
+
+    this.fileLength = 0;
+    if(this.directoryPaths.files != null){
+      this.directoryPaths.files.forEach(element => {
+        if(element.fileName.toLowerCase().includes(this.filter.toLowerCase())) this.fileLength++;
+      });
+    }
   }
 
   public chooseImage(filePath: string){
