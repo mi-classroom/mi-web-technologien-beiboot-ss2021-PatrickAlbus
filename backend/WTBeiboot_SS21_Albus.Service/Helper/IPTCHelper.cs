@@ -57,9 +57,12 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
                     {
                         foreach (ExifDataDTO data in exifData)
                         {
-                            Enum.TryParse(data.ExifName, out IptcTag iptcTag);
-                            iptcProfile.RemoveValue(iptcTag);
-                            iptcProfile.SetValue(iptcTag, data.ExifDescription);
+                            if(data.ExifDescription != null && data.ExifDescription != "")
+                            {
+                                Enum.TryParse(data.ExifName, out IptcTag iptcTag);
+                                iptcProfile.RemoveValue(iptcTag);
+                                iptcProfile.SetValue(iptcTag, data.ExifDescription);
+                            }
                         }
                         iptcProfile.UpdateData();
                         image.Save(path);
