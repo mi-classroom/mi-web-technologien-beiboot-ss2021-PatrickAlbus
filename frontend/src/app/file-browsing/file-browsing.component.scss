@@ -8,6 +8,7 @@
         color: var(--accent);
         font-size: var(--l);
         padding: var(--m);
+        max-height: 15vh;
     }
 
     .filter{
@@ -31,7 +32,7 @@
     }
 
     section{
-        height: 100px;
+        height: 150px;
         div{
             color: var(--light);
             display: flex;
@@ -55,6 +56,8 @@
     
     nav{
         color: var(--lightest);
+        max-height: calc(calc(100vh - 15vh) - 150px);
+        overflow: scroll;
         
         ul{
             margin-bottom: 0px;

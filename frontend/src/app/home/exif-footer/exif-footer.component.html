@@ -1,16 +1,19 @@
 <div class="container exifContainer" *ngIf="_exifData">
-    <div class="row">
-        <span class="material-icons">crop_7_5</span>
-        Größe: {{_exifData.size}}
-    </div>
-    <div class="row">
-        <span class="material-icons accent showButton" (click)="showExif()">
-        list
-        </span>
-        IPTC: -
-    </div>
-    <div class="row exifDataContainer">
+    <div class="mainData">
         <div class="row">
+            <span class="material-icons">crop_7_5</span>
+            Größe: {{_exifData.size}}
+        </div>
+        <div class="row">
+            <span class="material-icons accent showButton" (click)="showExif()">
+            list
+            </span>
+            IPTC: -
+        </div>
+    </div>
+    
+    <div class="row exifDataContainer">
+        <div class="row outputData">
             <ng-container *ngFor="let language of _exifConfiguration">
                 <div [ngClass]="'col-' + 12 / _exifConfiguration.length">
                     <ng-container *ngFor="let item of language.Values">
@@ -31,13 +34,15 @@
             </ng-container>
         </div>
         
-        <button type="submit" class="btn btn-primary" (click)="saveExif()">
-            <span class="material-icons">save</span>
-            <span>speichern</span>
-        </button>
-        <button class="btn btn-primary btn-close" (click)="showExif()">
-            <span class="material-icons">block</span>
-            <span>abbrechen</span>
-        </button>
+        <section class="controls">
+            <button type="submit" class="btn btn-primary" (click)="saveExif()">
+                <span class="material-icons">save</span>
+                <span>speichern</span>
+            </button>
+            <button class="btn btn-primary btn-close" (click)="showExif()">
+                <span class="material-icons">block</span>
+                <span>abbrechen</span>
+            </button>
+        </section>
     </div>
 </div>

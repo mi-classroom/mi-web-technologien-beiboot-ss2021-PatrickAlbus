@@ -15,28 +15,37 @@
         cursor: pointer;
     }
 
+    .mainData{
+        height: 50px;
+        padding-left: 15px;
+    }
+
     .exifDataContainer{
         display: none;
         overflow-y: scroll;
         margin-top: 25px;
-        max-height: 40vh;
-
-        button{
-            width: 150px;
-            color: var(--darkest);
-            background-color: var(--accent);
-            border-color: var(--accent);
-            bottom: 0;
-            position: absolute;
-            margin-bottom: 25px;
-            .material-icons{
+        
+        .controls{
+            height: 100px;
+            padding-left: 15px;
+            button{
+                width: 150px;
+                color: var(--darkest);
+                background-color: var(--accent);
+                border-color: var(--accent);
+                bottom: 0;
                 position: absolute;
-                margin-left: -25px;
+                margin-bottom: 25px;
+                .material-icons{
+                    position: absolute;
+                    margin-left: -25px;
+                }
+            }
+            .btn-close{
+                margin-left: 175px;
             }
         }
-        .btn-close{
-            margin-left: 175px;
-        }
+        
 
         input, input:hover, input:focus, input:active, textarea, textarea:hover, textarea:focus, textarea:active{
             outline: 0;
@@ -55,6 +64,10 @@
         .row{
             margin-right: unset;
             margin-left: unset;
+        }
+        .outputData{
+            max-height: calc(calc(50vh - 150px) - 1vh);
+            overflow: scroll;
         }
     }
 }

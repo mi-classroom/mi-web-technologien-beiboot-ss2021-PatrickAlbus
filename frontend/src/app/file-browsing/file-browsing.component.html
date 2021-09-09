@@ -3,46 +3,49 @@
         cda_
     </header>
 
-    <div class="row filter">
-        <input type="text" class="form-control" id="searchBox" placeholder="Suche" [(ngModel)]="filter" (ngModelChange)="changeFilter()">
-    </div>
+    <section>
+        <div class="row filter">
+            <input type="text" class="form-control" id="searchBox" placeholder="Suche" [(ngModel)]="filter" (ngModelChange)="changeFilter()">
+        </div>
+        
+        <section *ngIf="directoryPaths != null">
+            <div class="found">
+                <ng-container *ngIf="directoryLength != 0">
+                    <span class="material-icons">
+                        folder_open
+                    </span>
+                    {{directoryLength}} Verzeichnisse gefunden
+                </ng-container>
+                
+                <ng-container *ngIf="fileLength != 0">
+                    <span class="material-icons">
+                        image
+                    </span>
+                    {{fileLength}} Bilder gefunden
+                </ng-container>
+            </div>
     
-    <section *ngIf="directoryPaths != null">
-        <div class="found">
-            <ng-container *ngIf="directoryLength != 0">
-                <span class="material-icons">
-                    folder_open
+            <div *ngIf="location.length > 0" class="location">
+                <span class="material-icons location_on">
+                    location_on
                 </span>
-                {{directoryLength}} Verzeichnisse gefunden
-            </ng-container>
-            
-            <ng-container *ngIf="fileLength != 0">
-                <span class="material-icons">
-                    image
-                </span>
-                {{fileLength}} Bilder gefunden
-            </ng-container>
-        </div>
-
-        <div *ngIf="location.length > 0" class="location">
-            <span class="material-icons location_on">
-                location_on
-            </span>
-            <ng-container *ngFor="let item of location; let i = index">
-                <span *ngIf="i == 0">{{item}}</span>
-                <span *ngIf="i != 0">/{{item}}</span>
-            </ng-container>
-        </div>
-
-        <div *ngIf="directoryPaths.imageDataJson != null" class="download">
-            <a href="{{downloadPath + '' + directoryPaths.directoryPath}}">
-                <span class="material-icons">
-                    download
-                </span>
-                Download Folder
-            </a>
-        </div>
+                <ng-container *ngFor="let item of location; let i = index">
+                    <ng-container *ngIf="i == 0">{{item}}</ng-container>
+                    <ng-container *ngIf="i != 0">/{{item}}</ng-container>
+                </ng-container>
+            </div>
+    
+            <div *ngIf="directoryPaths.imageDataJson != null" class="download">
+                <a href="{{downloadPath + '' + directoryPaths.directoryPath}}">
+                    <span class="material-icons">
+                        download
+                    </span>
+                    Download Folder
+                </a>
+            </div>
+        </section>
     </section>
+    
     
     
     
