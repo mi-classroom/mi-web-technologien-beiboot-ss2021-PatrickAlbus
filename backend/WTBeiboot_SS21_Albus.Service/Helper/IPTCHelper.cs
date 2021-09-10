@@ -52,12 +52,13 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
                 using (var image = await Image.LoadAsync(path))
                 {
                     var iptcProfile = image.Metadata.IptcProfile;
+                    if (iptcProfile == null) iptcProfile = new IptcProfile();
                     List<IPTCTmp> iptcTmp = new List<IPTCTmp>();
                     if (iptcProfile != null)
                     {
                         foreach (ExifDataDTO data in exifData)
                         {
-                            if(data.ExifDescription != null && data.ExifDescription != "")
+                            if (data.ExifDescription != null && data.ExifDescription != "")
                             {
                                 Enum.TryParse(data.ExifName, out IptcTag iptcTag);
                                 iptcProfile.RemoveValue(iptcTag);
