@@ -51,9 +51,14 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
             {
                 using (var image = await Image.LoadAsync(path))
                 {
+
+                    if (image.Metadata.IptcProfile == null)
+                    {
+                        image.Metadata.IptcProfile = new IptcProfile();
+                    }
+
                     var iptcProfile = image.Metadata.IptcProfile;
-                    if (iptcProfile == null) iptcProfile = new IptcProfile();
-                    List<IPTCTmp> iptcTmp = new List<IPTCTmp>();
+                    
                     if (iptcProfile != null)
                     {
                         foreach (ExifDataDTO data in exifData)
@@ -80,11 +85,4 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
             return false;
         }
     }
-
-    public class IPTCTmp
-    {
-        public SixLabors.ImageSharp.Metadata.Profiles.Iptc.IptcTag Tag { get; set; }
-        public string Value { get; set; }
-    }
-
 }
