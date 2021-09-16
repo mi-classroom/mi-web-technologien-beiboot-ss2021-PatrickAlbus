@@ -1,23 +1,92 @@
 <div class="container">
-    <h6>Filter</h6>
-    <div class="row filter">
-        <div class="col-12">
-            <div class="row">
-                <input type="text" class="form-control" id="searchBox" placeholder="Suche" [(ngModel)]="filter" (change)="filterChange()">
-            </div>
-            <div class="row">
-                <button type="submit" class="btn btn-primary" (click)="filterChange()">Search</button>
-            </div>
+    <header>
+        cda_
+    </header>
+
+    <section>
+        <div class="row filter">
+            <input type="text" class="form-control" id="searchBox" placeholder="Suche" [(ngModel)]="filter" (ngModelChange)="changeFilter()">
         </div>
-    </div>
         
+        <section *ngIf="directoryPaths != null">
+            <div class="found">
+                <ng-container *ngIf="directoryLength != 0">
+                    <span class="material-icons">
+                        folder_open
+                    </span>
+                    {{directoryLength}} Verzeichnisse gefunden
+                </ng-container>
+                
+                <ng-container *ngIf="fileLength != 0">
+                    <span class="material-icons">
+                        image
+                    </span>
+                    {{fileLength}} Bilder gefunden
+                </ng-container>
+            </div>
     
-    <h6>Verzeichnisse</h6>
-    <div class="treeView">
-        <app-tree-view *ngIf="filteredDirectoryPaths != null"
-            (imagePath)="getFilePathOnChange($event)"
-            (imageDataJson)="getImageDataJsonOnChange($event)"
-            [value]="filteredDirectoryPaths"
-        ></app-tree-view>
-    </div>
+            <div *ngIf="location.length > 0" class="location">
+                <span class="material-icons location_on">
+                    location_on
+                </span>
+                <ng-container *ngFor="let item of location; let i = index">
+                    <ng-container *ngIf="i == 0">{{item}}</ng-container>
+                    <ng-container *ngIf="i != 0">/{{item}}</ng-container>
+                </ng-container>
+            </div>
+    
+            <div *ngIf="directoryPaths.imageDataJson != null" class="download">
+                <a href="{{downloadPath + '' + directoryPaths.directoryPath}}">
+                    <span class="material-icons">
+                        download
+                    </span>
+                    Download Folder
+                </a>
+            </div>
+        </section>
+    </section>
+    
+    
+    
+    
+
+    <nav *ngIf="directoryPaths != null">
+        <ul *ngIf="previousPath.length > 0">
+            <li>
+                <a (click)="gotoPreviousPath()">
+                    <span class="material-icons">
+                        chevron_left
+                    </span>
+                    ...
+                </a>
+            </li>
+        </ul>
+        <ul *ngIf="directoryPaths.childDirectories != null && directoryPaths.childDirectories.length > 0">
+            <ng-container *ngFor="let item of directoryPaths.childDirectories">
+                <li *ngIf="filter == null || filter == '*' || item.directoryName.toLowerCase().includes(filter.toLowerCase())">
+                    <a (click)="nextDirectory(item.directoryPath, item.directoryName)">
+                        <span class="material-icons">
+                            folder_open
+                        </span>
+                        {{item.directoryName}}
+                    </a>
+                    <span *ngIf="item.imageDataJson != null" class="material-icons info" (click)="chooseImageDataJson(item.imageDataJson)">
+                        info
+                    </span>
+                </li>
+            </ng-container>
+        </ul>
+        <ul *ngIf="directoryPaths.files != null && directoryPaths.files.length > 0">
+            <ng-container *ngFor="let item of directoryPaths.files">
+                <li *ngIf="filter == null || filter == '*' || item.fileName.toLowerCase().includes(filter.toLowerCase())">
+                    <a (click)="chooseImage(item.filePath)">
+                        <span class="material-icons">
+                            image
+                        </span>
+                        {{item.fileName}}
+                    </a>
+                </li>
+            </ng-container>
+        </ul>
+    </nav>
 </div>

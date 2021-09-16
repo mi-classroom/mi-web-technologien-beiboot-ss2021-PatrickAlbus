@@ -1,0 +1,133 @@
+.container {
+    background-color: var(--darker);
+    font-style: var(--font-sans-serif);
+    padding: 0;
+    height: 100vh;
+
+    header{
+        color: var(--accent);
+        font-size: var(--l);
+        padding: var(--m);
+        max-height: 15vh;
+    }
+
+    .filter{
+        margin-bottom: 20px;
+        input{
+            margin-left: var(--m);
+            margin-right: var(--m);
+            width: calc(100% - calc(2 * var(--m)));
+
+            outline: 0;
+            border-width: 0;
+            border-radius: unset;
+            background-color: var(--darker);
+            box-shadow: none;
+            color: var(--lightest);
+            background-image: linear-gradient(to left, var(--accent) 100%,var(--accent) 100%);
+            background-repeat: no-repeat;
+            background-position: 0 calc(100% + 3px),0 0;
+            background-size: 100% 5px;
+        }
+    }
+
+    section{
+        height: 150px;
+        div{
+            color: var(--light);
+            display: flex;
+            padding-left: var(--m);
+            margin-bottom: 5px;
+
+            a{
+                display: flex;
+                cursor: pointer;
+                color: var(--light);
+                text-decoration: none;
+            }
+            .location{
+                color: var(--lightest);
+            }
+            .material-icons{
+                margin-right: 5px;
+            }
+        }
+    }
+    
+    nav{
+        color: var(--lightest);
+        max-height: calc(calc(100vh - 15vh) - 150px);
+        overflow: scroll;
+        
+        ul{
+            margin-bottom: 0px;
+            padding-left: var(--m);
+            li{
+                list-style: none;
+                margin-bottom: 5px;
+                display: flex;
+    
+                a{
+                    display: flex;
+                    cursor: pointer;
+                }
+            }
+        }
+        
+        .material-icons{
+            color: var(--accent);
+            margin-right: 5px;
+            cursor: pointer;
+        }
+        .info{
+            margin-left: 10px;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+.filter{
+    display: block;
+}
+.filter .col-12 .row{
+    margin-bottom: 10px;
+}
+.filter .col-12 .row button.btn-primary{
+    margin: auto;
+    width: 50%;
+}
+
+.container .row{
+    padding: 0px 15px;
+}
+
+.treeView{
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+h6 {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    text-align: center;
+}
+h6:before, h6:after {
+    position: absolute;
+    top: 51%;
+    overflow: hidden;
+    width: 50%;
+    height: 0.5px;
+    content: '\a0';
+    background-color: #000;
+}
+h6:before {
+    margin-left: -50%;
+    text-align: right;
+}

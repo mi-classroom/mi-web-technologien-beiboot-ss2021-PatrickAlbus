@@ -7,6 +7,7 @@ using System.IO;
 using WTBeiboot_SS21_Albus.Service.Contracts.Services;
 using WTBeiboot_SS21_Albus.Service.Contracts.Helper;
 using WTBeiboot_SS21_Albus.Service.Contracts.DTO;
+using WTBeiboot_SS21_Albus.Service.Contracts.DTO.ExifDTO;
 using MetadataExtractor;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ using Newtonsoft.Json;
 using SixLabors.ImageSharp.Metadata.Profiles.Exif;
 using SixLabors.ImageSharp.Metadata.Profiles.Iptc;
 using SixLabors.ImageSharp;
+using System.Drawing;
 
 namespace WTBeiboot_SS21_Albus.Service.Services
 {
@@ -73,26 +75,33 @@ namespace WTBeiboot_SS21_Albus.Service.Services
             }
         }
 
-        public async Task<IEnumerable<ExifDTO>> GetExifOfFile(string path)
+        public async Task<ExifDTO> GetExifOfFile(string path)
         {
-            IEnumerable<ExifDTO> response = new List<ExifDTO>();
+            IEnumerable<ExifDataDTO> exifData = new List<ExifDataDTO>();
             if (File.Exists(path))
             {
                 var valuesSection = _configuration.GetSection("Settings:Configuration");
                 foreach (IConfigurationSection section in valuesSection.GetChildren())
                 {
-                    if (section.GetValue<string>("Title") == "Exif" && section.GetSection("Values")?.GetChildren().ToList().Count != 0) response = await _exifHelper.GetExifProfile(path, response.Cast<ExifDTO>().ToList(), section.GetSection("Values")?.GetChildren());
-                    if (section.GetValue<string>("Title") == "IPTC" && section.GetSection("Values")?.GetChildren().ToList().Count != 0) response = await _iptcHelper.GetIPTCProfile(path, response.Cast<ExifDTO>().ToList(), section.GetSection("Values")?.GetChildren());
-                 }
-                return response;
+                    if (section.GetValue<string>("Title") == "Exif" && section.GetSection("Values")?.GetChildren().ToList().Count != 0) exifData = await _exifHelper.GetExifProfile(path, exifData.Cast<ExifDataDTO>().ToList(), section.GetSection("Values")?.GetChildren());
+                    if (section.GetValue<string>("Title") == "IPTC" && section.GetSection("Values")?.GetChildren().ToList().Count != 0) exifData = await _iptcHelper.GetIPTCProfile(path, exifData.Cast<ExifDataDTO>().ToList(), section.GetSection("Values")?.GetChildren());
+                }
+
+                Bitmap bitmap = new Bitmap(path);
+
+                return new ExifDTO
+                {
+                    Size = bitmap.Width + "x" + bitmap.Height,
+                    ExifData = exifData
+                }; ;
             }
 
             return null;
         }
 
-        public async Task<bool> ChangeExifOfFile(string path, IEnumerable<ExifDTO> exifData)
+        public async Task<bool> ChangeExifOfFile(string path, ExifDTO exifData)
         {
-            var response = await _iptcHelper.SetIPTCProfile(path, exifData);
+            var response = await _iptcHelper.SetIPTCProfile(path, exifData.ExifData);
             if (!response) return false;
             return true;
         }

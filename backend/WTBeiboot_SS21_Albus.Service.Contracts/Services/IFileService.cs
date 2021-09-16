@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WTBeiboot_SS21_Albus.Service.Contracts.DTO;
+using WTBeiboot_SS21_Albus.Service.Contracts.DTO.ExifDTO;
 
 namespace WTBeiboot_SS21_Albus.Service.Contracts.Services
 {
@@ -11,7 +12,7 @@ namespace WTBeiboot_SS21_Albus.Service.Contracts.Services
     {
         Task<IEnumerable<FileDTO>> GetFiles(string path);
         Task<string> GetImageDataJson(string path);
-        Task<IEnumerable<ExifDTO>> GetExifOfFile(string path);
-        Task<bool> ChangeExifOfFile(string path, IEnumerable<ExifDTO> exifData);
+        Task<ExifDTO> GetExifOfFile(string path);
+        Task<bool> ChangeExifOfFile(string path, ExifDTO exifData);
     }
 }

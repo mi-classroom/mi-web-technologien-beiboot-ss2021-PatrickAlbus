@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WTBeiboot_SS21_Albus.Service.Contracts.DTO;
+using WTBeiboot_SS21_Albus.Service.Contracts.DTO.ExifDTO;
 
 namespace WTBeiboot_SS21_Albus.Service.Contracts.Helper
 {
     public interface IIPTCHelper
     {
-        Task<IEnumerable<ExifDTO>> GetIPTCProfile(string path, List<ExifDTO> currentValues, IEnumerable<IConfigurationSection> section);
-        Task<bool> SetIPTCProfile(string path, IEnumerable<ExifDTO> exifData);
+        Task<IEnumerable<ExifDataDTO>> GetIPTCProfile(string path, List<ExifDataDTO> currentValues, IEnumerable<IConfigurationSection> section);
+        Task<bool> SetIPTCProfile(string path, IEnumerable<ExifDataDTO> exifData);
     }
 }

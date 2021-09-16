@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Metadata.Profiles.Exif;
+using SixLabors.ImageSharp.Metadata.Profiles;
+using SixLabors.ImageSharp.Metadata.Profiles.Iptc;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -9,13 +10,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WTBeiboot_SS21_Albus.Service.Contracts.DTO;
+using WTBeiboot_SS21_Albus.Service.Contracts.DTO.ExifDTO;
 using WTBeiboot_SS21_Albus.Service.Contracts.Helper;
 
 namespace WTBeiboot_SS21_Albus.Service.Helper
 {
     public class IPTCHelper : IIPTCHelper
     {
-        public async Task<IEnumerable<ExifDTO>> GetIPTCProfile(string path, List<ExifDTO> currentValues, IEnumerable<IConfigurationSection> section)
+        public async Task<IEnumerable<ExifDataDTO>> GetIPTCProfile(string path, List<ExifDataDTO> currentValues, IEnumerable<IConfigurationSection> section)
         {
             using (var image = Image.Load(path))
             {
@@ -24,18 +26,17 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
                 {
                     foreach (var _section in section)
                     {
-                        foreach (var data in iptcProfile.Values)
+                        Enum.TryParse(_section.GetValue<string>("Name"), out IptcTag iptcTag);
+                        try
                         {
-                            if (_section.GetValue<string>("Name") == data.Tag.ToString())
+                            currentValues.Add(new ExifDataDTO
                             {
-                                currentValues.Add(new ExifDTO
-                                {
-                                    ExifName = _section.GetValue<string>("Name"),
-                                    ExifDescription = data.Value,
-                                    ExifIsEditable = _section.GetValue<bool>("IsEditable")
-                                });
-                            }
+                                ExifName = _section.GetValue<string>("Name"),
+                                ExifDescription = iptcProfile.GetValues(iptcTag).FirstOrDefault().ToString(),
+                                ExifIsEditable = _section.GetValue<bool>("IsEditable")
+                            });
                         }
+                        catch { }
                     }
                 }
            
@@ -44,33 +45,39 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
             return currentValues;
         }
 
-        public async Task<bool> SetIPTCProfile(string path, IEnumerable<ExifDTO> exifData)
+        public async Task<bool> SetIPTCProfile(string path, IEnumerable<ExifDataDTO> exifData)
         {
             if (File.Exists(path))
             {
-                using (var image = Image.Load(path))
+                using (var image = await Image.LoadAsync(path))
                 {
+
+                    if (image.Metadata.IptcProfile == null)
+                    {
+                        image.Metadata.IptcProfile = new IptcProfile();
+                    }
+
                     var iptcProfile = image.Metadata.IptcProfile;
+                    
                     if (iptcProfile != null)
                     {
-                        foreach (ExifDTO rawData in exifData)
+                        foreach (ExifDataDTO data in exifData)
                         {
-                            foreach (var iptcData in iptcProfile.Values)
+                            if (data.ExifDescription != null && data.ExifDescription != "")
                             {
-                                if (rawData.ExifIsEditable == true && rawData.ExifName == iptcData.Tag.ToString())
-                                {
-                                    iptcProfile.SetValue(iptcData.Tag, rawData.ExifDescription);
-                                }
+                                Enum.TryParse(data.ExifName, out IptcTag iptcTag);
+                                iptcProfile.RemoveValue(iptcTag);
+                                iptcProfile.SetValue(iptcTag, data.ExifDescription);
                             }
                         }
                         iptcProfile.UpdateData();
                         image.Save(path);
+                        image.Dispose();
                     }
                     else
                     {
                         return false;
                     }
-                    
                 }
                 return true;
             }
@@ -78,5 +85,4 @@ namespace WTBeiboot_SS21_Albus.Service.Helper
             return false;
         }
     }
-
 }

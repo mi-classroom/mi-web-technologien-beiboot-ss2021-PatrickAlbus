@@ -9,9 +9,9 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ExifDataDTO } from './exifDataDTO';
 
 export interface ExifDTO { 
-    exifName?: string;
-    exifDescription?: string;
-    exifIsEditable?: boolean;
+    size?: string;
+    exifData?: Array<ExifDataDTO>;
 }

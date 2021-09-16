@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using WTBeiboot_SS21_Albus.Service.Contracts.DTO;
 using Microsoft.Extensions.Configuration;
 using WTBeiboot_SS21_Albus.Logger;
+using System.IO.Compression;
 
 namespace WTBeiboot_SS21_Albus.Service.Services
 {
@@ -28,13 +29,13 @@ namespace WTBeiboot_SS21_Albus.Service.Services
             _loggerManager = loggerManager;
         }
 
-        public async Task<IEnumerable<DirectoryDTO>> GetDirectory(string path = null, string previousPath = null)
+        public async Task<DirectoryDTO> GetDirectory(string path = null, string previousPath = null)
         {
 #if DEBUG
             if(path == null) path = "D:\\Uni\\Master\\Semester 2\\WebTechnologien\\BeibootProjekt\\mi-web-technologien-beiboot-ss2021-PatrickAlbus\\data";
 #endif
 
-            List<DirectoryDTO> response = new List<DirectoryDTO>();
+            DirectoryDTO response = new DirectoryDTO();
 
             string currentPath = (path == null) ? _configuration.GetValue<String>("Settings:TargetDirectory") : path;
 
@@ -47,12 +48,12 @@ namespace WTBeiboot_SS21_Albus.Service.Services
                 DirectoryInfo dir = new DirectoryInfo(currentPath);
 
                 DirectoryDTO _directoryDTO = new DirectoryDTO
-                    {
-                        DirectoryName = dir.FullName.Split(@"\").Last().Split(@"/").Last(),
-                        DirectoryPath = dir.FullName,
-                        ImageDataJson = _fileService.GetImageDataJson(dir.FullName).Result != null ? _fileService.GetImageDataJson(dir.FullName).Result : null, 
-                        ChildDirectories = null,
-                        Files = _fileService.GetFiles(dir.FullName).Result
+                {
+                    DirectoryName = dir.FullName.Split(@"\").Last().Split(@"/").Last(),
+                    DirectoryPath = dir.FullName,
+                    ImageDataJson = _fileService.GetImageDataJson(dir.FullName).Result != null ? _fileService.GetImageDataJson(dir.FullName).Result : null, 
+                    ChildDirectories = null,
+                    Files = _fileService.GetFiles(dir.FullName).Result
                 };
 
                 if (dir.GetDirectories().Length > 0)
@@ -60,16 +61,64 @@ namespace WTBeiboot_SS21_Albus.Service.Services
                     List<DirectoryDTO> _childDirectories = new List<DirectoryDTO>();
                     foreach (DirectoryInfo g in dir.GetDirectories())
                     {
-                        foreach(DirectoryDTO _tmp in GetDirectory(g.FullName, currentPath).Result)
+                        _childDirectories.Add(new DirectoryDTO
                         {
-                            _childDirectories.Add(_tmp);
-                        }
+                            DirectoryName = g.FullName.Split(@"\").Last().Split(@"/").Last(),
+                            DirectoryPath = g.FullName,
+                            ImageDataJson = _fileService.GetImageDataJson(g.FullName).Result != null ? _fileService.GetImageDataJson(g.FullName).Result : null,
+                            ChildDirectories = null,
+                            Files = null
+                        });
                     }
                     _directoryDTO.ChildDirectories = _childDirectories;
                 }
-                response.Add(_directoryDTO);
+                response = _directoryDTO;
             }
             return response;
+        }
+
+        public (string fileType, byte[] archiveData, string archiveName) DownloadDirectory(string path)
+        {
+            var zipName = $"{path.Split(@"\").Last().Split(@"/").Last()}-{DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss")}.zip";
+
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                {
+                    GetSubDirectorys(path, archive);
+                    GetDirectoryFiles(path, archive);
+                }
+
+                return ("application/zip", memoryStream.ToArray(), zipName);
+            }
+        }
+
+        private void GetSubDirectorys(string path, ZipArchive archive)
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+
+            foreach (DirectoryInfo g in dir.GetDirectories())
+            {
+                GetDirectoryFiles(g.FullName, archive);
+            }
+        }
+        private void GetDirectoryFiles(string path, ZipArchive archive)
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+
+            var files = Directory.GetFiles(Path.Combine(_hostEnvironment.ContentRootPath, path)).ToList();
+
+            List<string> allowedExtensions = _configuration.GetSection("Settings:FilePattern")?.GetChildren()?.Select(x => x.Value)?.ToList();
+            allowedExtensions.Add(".json");
+
+            foreach (FileInfo file in dir.GetFiles().Where(file => allowedExtensions.Any(file.FullName.ToLower().EndsWith)))
+            {
+                var theFile = archive.CreateEntry(file.FullName);
+                using (var streamWriter = new StreamWriter(theFile.Open()))
+                {
+                    streamWriter.Write(File.ReadAllText(file.FullName));
+                }
+            }
         }
     }
 }

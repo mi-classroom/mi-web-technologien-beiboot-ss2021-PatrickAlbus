@@ -14,3 +14,38 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+/* JSON Viewe Color  */
+.segment-key {
+  color: var(--accent) !important;
+}
+.segment-separator{
+  color: var(--accent) !important;
+}
+.segment-type-boolean > .segment-main > .segment-value {
+  color: var(--lightest) !important;
+}
+.segment-type-string > .segment-main > .segment-value {
+  color: var(--lightest) !important;
+}
+.segment-type-number > .segment-main > .segment-value {
+  color:  var(--lightest) !important;
+}
+.ngx-json-viewer > .segment{
+  background-image: linear-gradient(to bottom, var(--lighten-strong) 100%,var(--lighten-strong) 100%);
+  background-repeat: no-repeat;
+  background-position: 1px 35px, 0px 0;
+  background-size: 1px 120%;
+  padding-left: 13px !important;
+}
+
+
+
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.material-icons{
+  user-select: none;
+}

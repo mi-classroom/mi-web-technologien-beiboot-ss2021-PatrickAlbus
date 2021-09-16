@@ -1,0 +1,30 @@
+.container{
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    max-width: inherit;
+
+    .imageView{
+        height: calc(100% - 6vh);
+        img{
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            height: -webkit-fill-available;
+        }
+    }
+    .json-viewer{
+        overflow-y: scroll;
+        overflow-x: hidden;
+        width: 100%;
+        max-height: 96vh;
+    }   
+    footer{
+        background-color: var(--dark);
+        bottom: 0;
+        width: 100%;
+        min-height: 65px;
+        position: absolute;
+    } 
+}
+
